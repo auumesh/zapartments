@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <div class="page-control nopepage">
+        <!-- overall page control start -->
+        <nav class="navbar navbar-expand-md navbar-matches">
+            <div class="container">
+                <a class="navbar-brand" href="javascript:void(0);">
+                    <img src="assets/img/logo.png" class="img-responsive">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav custom-right ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="latest.html">Latest</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="shortlist.html">Short List(1)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link enroll" href="matche.html">Matches</a>
+                        </li>
+                        <li class="nav-item edit-form">
+                            <a class="nav-link enroll" href="edit-form.html"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- header section end here -->
+        <div class="shortlist">
+            <!-- shortlist start -->
+            <div class="container-fluid">
+                <div class="custom-tab">
+                    <ul id="custom_tab_fixed" class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#list">list View</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#map">Map View</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="list" class="left-col tab-pane active">
+                            <div class="visiting">
+                                <h3 class="title-tab">{{visitingModel.TitleTab}} <span class="badge badge-light">{{visitingModel.Count}}</span></h3>
+                                <div class="row">
+                                    <div class="shortlist-box col-sm-6">
+                                        <div class="shortlist-box-content">
+                                            <a class="detailslink" href="detail-listing.html">
+                                                <!-- shortlist titile start -->
+                                                <div class="shortlist-title">
+                                                    <div class="left-title">
+                                                        {{visitingModel.ShortlistTitle}}
+                                                        <p class="list-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{visitingModel.Location}}</p>
+                                                    </div>
+                                                    <div class="visiting info-shortlist text-uppercase">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                            visiting
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="dropdown-item" href="javascript:void(0);">Love it</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Maybe</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Nobe</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- short list title end here -->
+                                                <div class="shortlist-img">
+                                                    <img src="assets/img/bets.jpg" class="img-responsive" alt="" />
+                                                </div>
+                                                <div class="shortlist-details">
+                                                    <!-- shortlist list start -->
+                                                    <div class="sortlist-info row">
+                                                        <div class="col-sm-8">
+                                                            <p class="changes"><i class="fa fa-usd" aria-hidden="true"></i>{{visitingModel.Changes}}</p>
+                                                            <p class="commute"><i class="fa fa-car" aria-hidden="true"></i> {{visitingModel.Commute}}</p>
+                                                            <p class="update"><i class="fa fa-clock-o" aria-hidden="true"></i> {{visitingModel.Update}}</p>
+                                                        </div>
+                                                        <div class="col-sm-4 left-border">
+                                                            <p class="bed">
+                                                                {{visitingModel.Bet}}
+                                                            </p>
+                                                            <p class="price"><i class="fa fa-usd" aria-hidden="true"></i> {{visitingModel.Price}}</p>
+                                                            <p class="avail">{{visitingModel.Avail}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shortlist-contact">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <a href="javascript: void(0);">{{visitingModel.PhoneNumber}}</a>
+                                                            </div>
+                                                            <div class="col-sm-6 left-border">
+                                                                <a href="javascript: void(0);"><i class="fa fa-envelope-o" aria-hidden="true"></i> Message</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- shortlist list content end -->
+                                    </div>
+                                    <!-- shortlist list end -->
+
+                                </div>
+                                <!-- row end -->
+                            </div>
+                            <!-- visiting end -->
+                            <div class="loveit">
+                                <!-- Love it box start -->
+                                <h3 class="title-tab">{{loveITModel.TitleTab}} <span class="badge badge-light">{{loveITModel.loveITCount}}</span></h3>
+                                <div class="row">
+                                    <div class="shortlist-box col-sm-6">
+                                        <div class="shortlist-box-content">
+                                            <a class="detailslink" href="detail-listing.html">
+                                                <div class="shortlist-title">
+                                                    {{loveITModel.ShortlistTitle}}
+                                                    <div class="left-title">
+                                                        Willow Creek
+                                                        <p class="list-location"><i class="fa fa-map-marker" aria-hidden="true"></i> Tomball</p>
+                                                    </div>
+                                                    <div class="visiting info-shortlist text-uppercase">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                             Love it
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="dropdown-item" href="javascript:void(0);">Love it</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Maybe</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Nobe</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- short list title end here -->
+
+                                                <div class="shortlist-img">
+                                                    <img src="assets/img/detail1.jpg" class="img-responsive" alt="" />
+                                                </div>
+
+                                                <div class="shortlist-details">
+                                                    <!-- shortlist list start -->
+                                                    <div class="sortlist-info row">
+                                                        <div class="col-sm-8">
+                                                            <p class="changes"><i class="fa fa-usd" aria-hidden="true"></i>{{loveITModel.Changes}}</p>
+                                                            <p class="commute"><i class="fa fa-car" aria-hidden="true"></i> {{loveITModel.Commute}}</p>
+                                                            <p class="update"><i class="fa fa-clock-o" aria-hidden="true"></i> {{loveITModel.Update}}</p>
+                                                        </div>
+                                                        <div class="col-sm-4 left-border">
+                                                            <p class="bed">
+                                                                {{loveITModel.Bet}}
+                                                            </p>
+                                                            <p class="price"><i class="fa fa-usd" aria-hidden="true"></i> {{loveITModel.Price}}</p>
+                                                            <p class="avail">{{loveITModel.Avail}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shortlist-contact">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <a href="javascript: void(0);">{{loveITModel.PhoneNumber}}</a>
+                                                            </div>
+                                                            <div class="col-sm-6 left-border">
+                                                                <a href="javascript: void(0);"><i class="fa fa-envelope-o" aria-hidden="true"></i> Message</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- shortlist list end -->
+
+                                    <div class="shortlist-box col-sm-6">
+                                        <div class="shortlist-box-content">
+                                            <a class="detailslink" href="detail-listing.html">
+                                                <div class="shortlist-title">
+                                                    <!-- shortlist titile start -->
+                                                    <div class="left-title">
+                                                        Creek
+                                                        <p class="list-location"><i class="fa fa-map-marker" aria-hidden="true"></i>{{loveITModel.Location}}</p>
+                                                    </div>
+                                                    <div class="visiting info-shortlist text-uppercase">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                            Love it
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="dropdown-item" href="javascript:void(0);">Love it</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Maybe</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Nobe</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- short list title end here -->
+                                                <div class="shortlist-img">
+                                                    <img src="assets/img/detail3.jpg" class="img-responsive" alt="" />
+                                                </div>
+
+                                                <div class="shortlist-details">
+                                                    <!-- shortlist list start -->
+                                                    <div class="sortlist-info row">
+                                                        <div class="col-sm-8">
+                                                            <p class="changes"><i class="fa fa-usd" aria-hidden="true"></i>{{loveITModel.Changes}}</p>
+                                                            <p class="commute"><i class="fa fa-car" aria-hidden="true"></i> {{loveITModel.Commute}}</p>
+                                                            <p class="update"><i class="fa fa-clock-o" aria-hidden="true"></i> {{loveITModel.Update}}</p>
+                                                        </div>
+                                                        <div class="col-sm-4 left-border">
+                                                            <p class="bed">
+                                                                {{loveITModel.Bet}}
+                                                            </p>
+                                                            <p class="price"><i class="fa fa-usd" aria-hidden="true"></i> {{loveITModel.Price}}</p>
+                                                            <p class="avail">{{loveITModel.Avail}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shortlist-contact">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <a href="javascript: void(0);">{{loveITModel.PhoneNumber}}</a>
+                                                            </div>
+                                                            <div class="col-sm-6 left-border">
+                                                                <a href="javascript: void(0);"><i class="fa fa-envelope-o" aria-hidden="true"></i> Message</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- shortlist list end -->
+                                </div>
+                                <!-- row end -->
+                            </div>
+                            <!-- love it end -->
+
+                            <div class="maybe">
+                                <!-- maybe box start -->
+                                <h3 class="title-tab">{{mayBeModel.TitleTab}} <span class="badge badge-light">{{mayBeModel.Count}}</span></h3>
+                                <div class="row">
+                                    <div class="shortlist-box col-sm-6">
+                                        <div class="shortlist-box-content">
+                                            <a class="detailslink" href="detail-listing.html">
+                                                <div class="shortlist-title">
+                                                    <!-- shortlist titile start -->
+                                                    <div class="left-title">
+                                                        {{mayBeModel.ShortlistTitle}}
+                                                        <p class="list-location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{mayBeModel.Location}}</p>
+                                                    </div>
+                                                    <div class="visiting info-shortlist text-uppercase">
+                                                        <div class="dropdown">
+                                                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                             Maybe
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <button class="dropdown-item" href="javascript:void(0);">Love it</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Maybe</button>
+                                                                <button class="dropdown-item" href="javascript:void(0);">Nobe</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- short list title end here -->
+
+                                                <div class="shortlist-img">
+                                                    <img src="assets/img/detail2.jpg" class="img-responsive" alt="" />
+                                                </div>
+
+                                                <div class="shortlist-details">
+                                                    <!-- shortlist list start -->
+                                                    <div class="sortlist-info row">
+                                                        <div class="col-sm-8">
+                                                            <p class="changes"><i class="fa fa-usd" aria-hidden="true"></i>{{mayBeModel.Changes}}</p>
+                                                            <p class="commute"><i class="fa fa-car" aria-hidden="true"></i> {{mayBeModel.Commute}}</p>
+                                                            <p class="update"><i class="fa fa-clock-o" aria-hidden="true"></i> {{mayBeModel.Update}}</p>
+                                                        </div>
+                                                        <div class="col-sm-4 left-border">
+                                                            <p class="bed">
+                                                                {{mayBeModel.Bet}}
+                                                            </p>
+                                                            <p class="price"><i class="fa fa-usd" aria-hidden="true"></i> {{mayBeModel.Price}}</p>
+                                                            <p class="avail">{{mayBeModel.Avail}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="shortlist-contact">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <a href="javascript: void(0);">{{mayBeModel.PhoneNumber}}</a>
+                                                            </div>
+                                                            <div class="col-sm-6 left-border">
+                                                                <a href="javascript: void(0);"><i class="fa fa-envelope-o" aria-hidden="true"></i> Message</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- shortlist list end -->
+                                    </div>
+
+                                </div>
+                                <!-- row end -->
+                            </div>
+                            <!-- maybe box end -->
+
+                            <div class="nobe">
+                                <!-- nobe section srart -->
+
+                                <h3 class="title-tab">Not for me <span class="badge badge-light">{{shortListModel.ShortListCount}}</span></h3>
+
+                                <a class="detailslink" href="javascript:void(0);" data-toggle="modal" data-target="#nobe">
+                                    <div class="nobe-content">
+                                        <div class="row">
+                                            <div class="col-sm-5">
+                                                <div class="nobe-left">
+                                                    <h3 class="nobe-title text-uppercase"><span class="close-icom"><i class="fa fa-times-circle-o" aria-hidden="true"></i></span>                                                        Not for Me</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-7 left-border">
+                                                <div class="nobe-right">
+                                                    <p>
+                                                        These are the places you<br /> said you didn’t like
+                                                    </p>
+                                                    <div class="card-listings-count text-right">
+                                                        <span>2</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- nobe section end -->
+
+                            <!--- nobe modal start here -->
+                            <!-- The Modal -->
+                            <div class="modal fade" id="nobe">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <!-- Modal Header -->
+                                        <button type="button" class="close" data-dismiss="modal"><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+                                        <!-- Modal body -->
+                                        <div class="modal-body custom-modal-body">
+                                            <h3 class="nobe-title">Not for me <span class="count">{{shortListModel.ShortListCount}}</span></h3>
+                                            <p>These are the places you said you didn’t like</p>
+                                            <div class="nobe-rejected">
+                                                <a class="detailslink" href="detail-listing.html">
+                                                    <div class="nobe-rejected-content">
+                                                        <img src="assets/img/detail1.jpg" class="img-responsive" alt="" />
+                                                        <p>Sovereign Spring Cypress</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="nobe-rejected">
+                                                <a class="detailslink" href="detail-listing.html">
+                                                    <div class="nobe-rejected-content">
+                                                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="" />
+                                                        <p>Sovereign Spring Cypress</p>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--- nobe modal end here -->
+                        </div>
+                        <!-- left side tab end col md end -->
+
+                        <!-- right side tab end col md start -->
+                        <div id="map" class="right-col tab-pane fade">
+                            <div class="location-map" id="locationmap">
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30712135.646119043!2d64.41778857333722!3d20.006836007267307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fa1854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1522359068144"
+                                    width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <!-- right side tab end col md end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- containe-fluid end here -->
+    </div>
+    <!-- shortlist div end here -->
+    <!-- overall page control end -->
+
+
+
+
+    <footer>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="design">
+                            <a href="#">Advertisers  </a> |
+                            <a href="#">Contact US  </a> |
+                            <a href="#">Terms Of Use </a> |
+                            <a href="#">Privacy Policy  </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="copyright text-right">
+                            &copy; 2018, Zapartments, All rights reserved
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        window.onscroll = function () {
+            myMap()
+        };
+        var mobileTab = document.getElementById("custom_tab_fixed");
+        var navbar = document.getElementById("locationmap");
+        var sticky = navbar.offsetTop;
+        var mobileFixed = mobileTab.offsetTop;
+
+        function myMap() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("location-map-fixed")
+            } else {
+                navbar.classList.remove("location-map-fixed");
+            }
+            if (window.pageYOffset >= mobileFixed) {
+                mobileTab.classList.add("fixed-top")
+            } else {
+                mobileTab.classList.remove("fixed-top");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<div class="bodyContent">
+    <div class="page-control">
+
+        <headermenu></headermenu>
+        <!-- header section end here -->
+        <div class="content-div-bg">
+            <div style="margin-top: 20px;">
+                <div class="container">
+                    <ng2-toasty [position]="'top-center'"></ng2-toasty>
+                    <!--container div start -->
+                    <div class="list-allcontroll">
+                        <!--list all controll div start -->
+
+                        <div>
+                            <div class="header-navbar">
+                                <h3 class=property-title style="    margin-top: 0px;margin-bottom: 3px;">Management Company</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Grid Session  -->
+            <div *ngIf="showGrid">
+                <div class="container">
+                    <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                        <div class="btn-toolbar-example " style=" margin-top:10px;   text-align: right;">
+                            <button type="button" title="Add" (click)="addmanagement()" class="apartSuccessBtn" value="Add" style="width:87px;margin-right: 13px !important">Add
+                            </button>
+
+                        </div>
+
+                    </div>
+                    <div class="col-sm-12 " style="margin-bottom: 30px;">
+                        <p-dataTable [value]="managementList" [rows]="10" [paginator]="true">
+                            <p-column field="HighlightsName" header="Action" [style]="{'width':'50px'}">
+                                <ng-template let-index="rowIndex" let-detail="rowData" pTemplate="body">
+                                    <div class="col-sm-6" style="padding: 0px">
+                                        <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editTheManagement(index)"></i>
+                                    </div>
+                                    <div class="col-sm-6" style="padding: 0px">
+                                        <i class="fa fa-remove" style="cursor:pointer" title="Remove" (click)="removeThemanagement(index)"></i>
+                                    </div>
+                                </ng-template>
+                            </p-column>
+                            <p-column field="name" header="Company Name"></p-column>
+                            <p-column field="description" header="Description "></p-column>
+                            <p-column field="web_site" header="Web Site ">
+
+
+                            </p-column>
+
+
+                        </p-dataTable>
+                    </div>
+                </div>
+            </div>
+
+            <!-- add/edit Session  -->
+            <div class="container" *ngIf="!showGrid">
+                <div class="row">
+                    <div class="col-sm-12" style="margin-top: 10px;margin-bottom: 10px;">
+                        <i class="fa fa-sort-amount-asc expant accorditionToggleIcon  accorditionToggle" style="cursor: pointer;" title="Section Toggle"
+                            (click)="toggleAccordion()"></i>
+                    </div>
+                    <div class="col-sm-12">
+                        <p-accordion [multiple]="true">
+                            <p-accordionTab [selected]="accorditionToggledata[0]" header="{{(Action=='add') ? 'Add' : 'Update' }} Company" [selected]="true">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-6">
+                                            <div class="form-group required">
+                                                <label class="control-label" for="selfId">Company Name</label>
+                                                <input type="text" [(ngModel)]="companyModel.name" class="form-control" required name="companyName" #CompanyName="ngModel"
+                                                />
+                                                <div *ngIf="(!(CompanyName.valid || (CompanyName.pristine &&!SubmitbtnClicked)))
+                                                &&SubmitbtnClicked">
+                                                    <div [hidden]="CompanyName.valid || (CompanyName.pristine && 
+                                                      !SubmitbtnClicked)">
+                                                        <small class="text-danger">Company Name is required.</small>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group ">
+                                                <label for="selfId">Description</label>
+                                                <br>
+                                                <textarea class="form-control" [(ngModel)]="companyModel.description" required style="height: 79px !important"></textarea>
+                                            </div>
+                                            <div class="col-sm-12 padding-0">
+                                                <div class="col-sm-6 padding-0">
+                                                    <div class="form-group">
+                                                        <label for="selfId">Phone Type</label>
+                                                        <input type="text" [(ngModel)]="commonVariable.phoneType" class="form-control" name="propertyName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="form-group">
+                                                        <label for="selfId">Phone</label>
+                                                        <p-inputMask mask="999-999-9999" [(ngModel)]="commonVariable.phone" styleClass="widthpercent" placeholder="999-999-9999" name="phone"
+                                                            id="phone"></p-inputMask>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1 col-sm-1 addButtonBorder" style="    margin-top: 20px;">
+                                                    <i class="fa fa-plus" title="Add Data" (click)="addDataIntoModel('phone')" style="cursor:pointer"></i>
+                                                </div>
+                                                <div class="col-sm-12 highLightHolderDiv" *ngIf="companyModel?.phone_list?.length>0">
+                                                    <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'leftDotted' : ''" *ngFor="let phoneDet of companyModel.phone_list; let index=index">
+                                                        <li class="propertyList">
+                                                            <div class="col-sm-12 padding-0">
+                                                                <div class="col-sm-10 highLightHolderText">{{phoneDet.phone}}</div>
+                                                                <div class="col-sm-1  padding-0">
+                                                                    <span class="removeClass">
+                                                                        <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editTheManagementDetails(index,'phone')"></i>
+                                                                    </span>
+
+                                                                </div>
+                                                                <div class="col-sm-1  padding-0">
+                                                                    <span class="removeClass">
+                                                                        <i class="fa fa-remove" style="cursor:pointer" title="Remove" (click)="removemanagementDetails(index,'phone')"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="selfId">Web Sites</label>
+                                                <input type="url" [(ngModel)]="companyModel.web_site" class="form-control" name="propertyName" />
+                                                <div *ngIf="!this.commonService.validateURL(companyModel.web_site,true)" class="text text-danger">
+                                                    <small>Invalid Web Sites.</small>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="selfId">Address</label>
+                                                <br>
+                                                <div class="col-sm-12 padding-0" style="margin-bottom: 10px;margin-right: 0px;">
+                                                    <div class="col-sm-12 padding-0">
+                                                        <textarea class="form-control" [(ngModel)]="addressInfo" required style="height: 79px !important"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 padding-0">
+                                                <div class="col-sm-6 padding-0">
+                                                    <div class="form-group">
+                                                        <label for="selfId">Email Type</label>
+                                                        <input type="text" [(ngModel)]="commonVariable.emailType" class="form-control" name="propertyName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="form-group">
+                                                        <label for="selfId">Email</label>
+                                                        <input type="email" [(ngModel)]="commonVariable.email" class="form-control" name="propertyName" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-1 col-sm-1 addButtonBorder" style="    margin-top: 20px;">
+                                                    <i class="fa fa-plus" title="Add Data" (click)="addDataIntoModel('email')" style="cursor:pointer"></i>
+                                                </div>
+                                                <div class="col-sm-12 highLightHolderDiv" *ngIf="companyModel?.email_list?.length>0">
+                                                    <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'leftDotted' : ''" *ngFor="let emailDet of companyModel.email_list; let index=index">
+                                                        <li class="propertyList">
+                                                            <div class="col-sm-12 padding-0">
+                                                                <div class="col-sm-10 highLightHolderText">{{emailDet.email}}</div>
+                                                                <div class="col-sm-1  padding-0">
+                                                                    <span class="removeClass">
+                                                                        <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editTheManagementDetails(index,'email')"></i>
+                                                                    </span>
+
+                                                                </div>
+                                                                <div class="col-sm-1  padding-0">
+                                                                    <span class="removeClass">
+                                                                        <i class="fa fa-remove" style="cursor:pointer" title="Remove" (click)="removemanagementDetails(index,'email')"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-accordionTab>
+                            <p-accordionTab [selected]="accorditionToggledata[1]" header="{{(Action=='add') ? 'Add' : 'Update' }} Company System">
+                                <div class="row ">
+                                    <div class="col-sm-12 padding-0">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="system">System</label>
+                                                <input type="text" [(ngModel)]="systemCredits.system" class="form-control" name="system" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="url">Url</label>
+                                                <input type="text" [(ngModel)]="systemCredits.url" class="form-control" name="url" />
+
+                                                <small *ngIf="!this.commonService.validateURL(systemCredits.url,true)" class="text text-danger">Url is InValid</small>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">UserName</label>
+                                                <input type="text" [(ngModel)]="systemCredits.account_info_dict.UserName" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-sm-12 padding-0">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">Password</label>
+                                                <input type="password" [(ngModel)]="systemCredits.account_info_dict.Password" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">ServerName</label>
+                                                <input type="text" [(ngModel)]="systemCredits.account_info_dict.ServerName" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">Database</label>
+                                                <input type="text" [(ngModel)]="systemCredits.account_info_dict.Database" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-12 padding-0">
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">Platform</label>
+                                                <input type="text" [(ngModel)]="systemCredits.account_info_dict.Platform" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">Client Key ID</label>
+                                                <input type="text" [(ngModel)]="systemCredits.client_key_id" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="selfId">Client Secret</label>
+                                                <input type="text" [(ngModel)]="systemCredits.client_secret" class="form-control" name="rentName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                                        <div class="btn-toolbar-example " style=" margin-top:10px;   text-align: right;">
+                                            <button type="submit" title="Save" (click)=" addsystem()" class="apartSuccessBtn" value="Save" style="width:87px;margin-right: 13px !important">Add
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-12 ">
+                                        <p-dataTable [value]="companyModel.system_creds_list" [immutable]="false">
+                                            <p-column field="HighlightsName" header="Action" [style]="{'width':'50px'}">
+                                                <ng-template let-index="rowIndex" let-detail="rowData" pTemplate="body">
+                                                    <div class="col-sm-6" style="padding: 0px">
+                                                        <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editTheSystem(index)"></i>
+                                                    </div>
+                                                    <div class="col-sm-6" style="padding: 0px">
+                                                        <i class="fa fa-remove" style="cursor:pointer" title="Remove" (click)="removeTheSystem(index)"></i>
+                                                    </div>
+                                                </ng-template>
+                                            </p-column>
+                                            <p-column field="system" header="System"></p-column>
+                                            <p-column field="url" header="Url "></p-column>
+                                            <p-column field="UserName" header="UserName ">
+                                                <ng-template let-index="rowIndex" let-detail="rowData" pTemplate="body">
+                                                    {{detail?.account_info_dict?.UserName}}
+                                                </ng-template>
+
+                                            </p-column>
+                                            <p-column field="ServerName" header="ServerName ">
+                                                <ng-template let-index="rowIndex" let-detail="rowData" pTemplate="body">
+                                                    {{detail?.account_info_dict?.ServerName}}
+                                                </ng-template>
+                                            </p-column>
+
+                                        </p-dataTable>
+                                    </div>
+                                </div>
+
+
+                            </p-accordionTab>
+                        </p-accordion>
+
+                    </div>
+                    <div class="col-sm-12" style="margin-bottom: 10px;">
+                        <div class="">
+                            <div class="">
+                                <div class="btn-toolbar-example " style=" margin-top:10px;   text-align: right;">
+                                    <button type="submit" title="Save" (click)="addNewManagementCompany()" class="apartSuccessBtn" value="Save" tabindex="9"
+                                        style="width:87px;margin-right: 13px !important">{{(Action=='add') ? 'Save' : 'Update' }}
+                                    </button>
+                                    <button class="apartCloseBtn" (click)="backButtonAction()" title="Back" data-dismiss="modal" type="button" tabindex="10"
+                                        style="width:87px">Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- footer Session  -->
+        <footer>
+            <footercomponent></footercomponent>
+        </footer>
+
+    </div>
+</div>
+
+</html>

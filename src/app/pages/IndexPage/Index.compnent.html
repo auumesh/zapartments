@@ -1,0 +1,445 @@
+<body>
+    <div class="home-page">
+      <!-- home page start here -->
+      <div class="top-banner">
+  
+        <!-- overall page control start -->
+        <nav class="indexPage navbar navbar-expand-md homw-nav">
+          <a class="indexPage navbar-brand">
+            <img src="assets/img/logo.png" class="img-responsive">
+          </a>
+          <button class="indexPage navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+          <div class="indexPage collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="indexPage navbar-nav custom-right ml-auto">
+              <li class=" nav-item">
+                <a class="nav-link"(click)="HeadermenuChange('apartmentList')">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link"(click)="HeadermenuChange('signup')">Sing-Up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link enroll" (click)="HeadermenuChange('login')">Login</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        
+        <!-- header section end here -->
+  
+        <div class="container">
+          <div class="row custom-padding">
+            <div class="col-sm-8">
+              <div class="baner-content">
+                <h1 class="baner-title">Apartments For Rent</h1>
+                <p class="baner-subtitle">
+                  With active listings, ZAPARTMENTS has the great listings of apartments in your locale across major cities in the United States
+                </p>
+  
+                <div class="get-started-btn">
+                  <span class="banner__btn">Get started</span>
+                  <div class="banner__arrow-circle">•</div>
+                  <svg class="banner__arrow-end js-arrow-end" style="opacity: 1;">
+                    <use xlink:href="#icon-arrow-end"></use>
+                  </svg>
+                  <div class="banner__arrow">
+                    <svg id="banner-line" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                      y="0px" viewBox="0 0 774 284" enable-background="new 0 0 774 284" xml:space="preserve">
+                      <path fill="none" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="0,2004.009" d="M220.6,239.6
+                    c-3.6-15.5-17.5-27.1-34.1-27.1h-150c-19.3,0-35,15.7-35,35c0,19.3,15.7,35,35,35c0,0,88,0,150,0c169,0,244.9-7.5,291-19
+                    c41.3-10.2,114.1-33.7,118-83c4.2-53.5-59.4-67.5-102-54c-47.2,15-52.3,78.2,1,90c58.1,12.9,169.6-53.6,274.7-210"
+                        style="stroke-dasharray: 1526, 1528; stroke-dashoffset: 0;"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- left end -->
+            <div class="col-sm-4">
+              <div class="home-search">
+                <p>
+                  Let's Get Your Dream Home
+                </p>
+                <form>
+                  <div class="form-group">
+                    <input class="form-control" type="text"
+                     placeholder="Search by location, project or Keyword " />
+                  </div>
+                  <button class="btn btn-search">Search</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="rental-listing">
+        <br />
+        <div class="container">
+          <div class="service-title">Rental Listings in Popular Cities</div>
+          <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <div class="service-box">
+                <div class="service-icon list1">
+                  <div class="front-content">
+                    <h3>Kentucky </h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-6 col-md-3">
+              <div class="service-box">
+                <div class="service-icon list2">
+                  <div class="front-content">
+                    <h3>Kentucky </h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-6 col-md-3">
+              <div class="service-box">
+                <div class="service-icon list3">
+                  <div class="front-content">
+                    <h3>Kentucky </h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-6 col-md-3">
+              <div class="service-box">
+                <div class="service-icon list4">
+                  <div class="front-content">
+                    <h3>Kentucky </h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- rental listing page end here -->
+  
+      <div class="looking-for">
+        <div class="container">
+          <div class="service-title">What are you looking for?<br />
+            <div class="small-head">Personalize your results by <a >choosing your own preferences</a></div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 col-md-2">
+              <div class="looking-box">
+                <a class="cart light-rose-cart">
+                  <div class="card-content light-rose-cart-content">
+                    <div class="card-text">
+                      <div class="card-title">Studio Apartments</div>
+                      <div class="card-listings-count text-center">
+                        <span>See All</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-2">
+              <div class="looking-box">
+                <a class="cart dark-blue-cart" >
+                  <div class="card-content dark-blue-cart-content">
+                    <div class="card-text">
+                      <div class="card-title">1 Bedroom Apartments</div>
+                      <div class="card-listings-count text-center">
+                        <span>See All</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-2">
+              <div class="looking-box">
+                <a class="cart orange" >
+                  <div class="card-content">
+                    <div class="card-text">
+                      <div class="card-title">2 Bedroom Apartments</div>
+                      <div class="card-listings-count text-center">
+                        <span>See All</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-2">
+              <div class="looking-box">
+                <a class="cart rose-cart-content" >
+                  <div class="card-content rose-cart-content">
+                    <div class="card-text">
+                      <div class="card-title">Pet Friendly Apartments</div>
+                      <div class="card-listings-count text-center">
+                        <span>See All</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+  
+            <div class="col-sm-6 col-md-2">
+              <div class="looking-box">
+                <a class="cart blue-cart-content" >
+                  <div class="card-content blue-cart-content">
+                    <div class="card-text">
+                      <div class="card-title">Luxury Apartments</div>
+                      <div class="card-listings-count text-center">
+                        <span>See All</span><i class="fa fa-arrow-right" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+  
+  
+      <div class="col-sm-12 google-map">
+        <!-- google map start -->
+        <div class="col-sm-12">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26372592.659049906!2d-113.741370938554!3d36.20764413719095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited+States!5e0!3m2!1sen!2sin!4v1521569167534"
+          width="100%" height="350" frameborder="0" style="border:0" allowfullscreen></iframe>
+      </div>
+        </div>
+      <!-- google map end here -->
+  
+      <div class="rental-listing">
+        <div class="container">
+          <div class="service-title">Rental Listings in Popular Cities</div>
+          <div class="row">
+            <div class="col-sm-4 col-md-4">
+              <div class="service-box">
+                <div class="service-icon list5">
+                  <div class="front-content">
+                    <h3>Austin</h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-4 col-md-4">
+              <div class="service-box">
+                <div class="service-icon list6">
+                  <div class="front-content">
+                    <h3>Austin</h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-4 col-md-4">
+              <div class="service-box">
+                <div class="service-icon list7">
+                  <div class="front-content">
+                    <h3>Austin</h3>
+                  </div>
+                </div>
+                <div class="service-content">
+                  <h3>Kentucky </h3>
+                  <p>No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                    know how to pursue pleasure</p>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+      <!-- popular cities end here -->
+  
+      <div class="our-feature">
+        <div class="container">
+          <h3 class="widget__title text-center">Our Featured Apartments Listings</h3>
+          <div class="row">
+            <div class="col-sm-4">
+              <a class="cart">
+                <div class="latest-box">
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <div class="latest-left">
+                        <img src="assets/img/detail1.jpg" class="img-responsive" alt="">
+                        <div class="feau-top theam-color">Featured</div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="latest-right">
+                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="">
+                      </div>
+                      <div class="latest-right">
+                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="">
+                      </div>
+                    </div>
+  
+                  </div>
+                  <div class="latest-details">
+                    <div class="update-title-time">
+                      <span class="text-left price theam-color">Starting at $886</span>
+                      <span class="pull-right">Updated 2 hrs ago</span>
+                    </div>
+                    <div class="latest-address">
+                      <h3 class="city">Estraya Westover Hills</h3>
+                      <p class="place">1626 North Ellison Drive <br /> San Antonio, TX</p>
+                    </div>
+                  </div>
+  
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-4">
+              <a class="cart">
+                <div class="latest-box">
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <div class="latest-left">
+                        <img src="assets/img/detail1.jpg" class="img-responsive" alt="">
+                        <div class="feau-top theam-color">Featured</div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="latest-right">
+                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="">
+                      </div>
+                      <div class="latest-right">
+                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="latest-details">
+                    <div class="update-title-time">
+                      <span class="text-left price theam-color">Starting at $886</span>
+                      <span class="pull-right">Updated 2 hrs ago</span>
+                    </div>
+                    <div class="latest-address">
+                      <h3 class="city">Estraya Westover Hills</h3>
+                      <p class="place">1626 North Ellison Drive <br /> San Antonio, TX</p>
+                    </div>
+                  </div>
+  
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-4">
+              <a class="cart">
+                <div class="latest-box">
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <div class="latest-left">
+                        <img src="assets/img/detail1.jpg" class="img-responsive" alt="">
+                        <div class="feau-top theam-color">Featured</div>
+                      </div>
+                    </div>
+                    <div class="col-xs-4">
+                      <div class="latest-right">
+                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="">
+                      </div>
+                      <div class="latest-right">
+                        <img src="assets/img/detail2.jpg" class="img-responsive" alt="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="latest-details">
+                    <div class="update-title-time">
+                      <span class="text-left price theam-color">Starting at $886</span>
+                      <span class="pull-right">Updated 2 hrs ago</span>
+                    </div>
+                    <div class="latest-address">
+                      <h3 class="city">Estraya Westover Hills</h3>
+                      <p class="place">1626 North Ellison Drive <br /> San Antonio, TX</p>
+                    </div>
+                  </div>
+  
+                </div>
+              </a>
+            </div>
+  
+  
+          </div>
+          <div class="widget__footer">
+            <a class="widget__more">More properties</a>
+          </div>
+          <!-- row end -->
+          <div class="col-sm-12" id="highLights">
+            <div class="col-sm-12">
+              <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+            </div> 
+        </div>
+        </div>
+        
+        <!-- container end -->
+      </div>
+      <!-- our-feature end -->
+  
+      
+      <!-- testimonial end here -->
+    </div>
+    <!-- home page end here -->
+  
+  
+    <footer>
+  
+      <!-- <div class="footer-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="design">
+                <a >Advertisers  </a> | <a >Contact US  </a> | <a >Terms Of Use </a> | <a >Privacy Policy  </a>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="copyright text-right">
+                &copy; 2018, Zapartments, All rights reserved
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <footercomponent></footercomponent>
+    </footer>
+  
+  
+  </body>

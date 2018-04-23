@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+
+<div class="bodyContent">
+  <div id="home body" class="page-control ">
+    <!-- overall page control start -->
+    <headermenu></headermenu>
+    <!-- header section end here -->
+
+    <div class="content-div">
+      <div class="">
+
+        <div class="row conrow">
+          <div class="col-sm-9" style="padding-left: 40px;">
+            <div class="detailpage-left">
+              <!--- left side detil page -->
+              <div class=" galleryimage padding-0" id="highLights">
+                <div>
+                  <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                </div>
+              </div>
+              <div class="curveGallery"></div>
+
+              <div class="detail-title text-center">
+
+                <h3>
+                  {{propertyDetail?.name}}
+                  <span class="propertyEdit">
+                    <i class="fa fa-pencil " title="Edit" style="cursor:pointer" (click)="updatePropertyDetail()"></i>
+                  </span>
+                </h3>
+                <p style=" font-size: 14px;color: black;">Call
+                  <a href="javascript: void(0);" style="color: #AF2048 !important;">{{propertyDetail?.phone_list[0]?.phone}}</a>
+
+                </p>
+              </div>
+              <ul class="nav nav-pills right nav justify-content-center theme-pills">
+                <li style="margin-left: 30px;">
+                  <a class="active" data-toggle="pill" (click)="goToDivHolder('highLights')">Highlights</a>
+                </li>
+                <li>
+                  <a data-toggle="pill" (click)="goToDivHolder('price')">Price</a>
+                </li>
+                <li>
+                  <a data-toggle="pill" (click)="goToDivHolder('review')">Reviews</a>
+                </li>
+                <li>
+                  <a data-toggle="pill" (click)="goToDivHolder('nitty')">Nitty Gritty</a>
+                </li>
+                <li>
+                  <a data-toggle="pill" (click)="goToDivHolder('location')">Location</a>
+                </li>
+              </ul>
+
+              <div class="col-sm-12">
+                <div id="carouselContainer" *ngIf="propertyDetail?.concessions.length>0">
+                  <div ng2-carouselamos class="slides-wrapper" [items]="propertyDetail?.concessions" [width]="900" [$prev]="prev" [$next]="next"
+                    [$item]="item">
+                  </div>
+                  <ng-template #prev>
+                    <i class="ngx-gallery-icon-content fa fa-arrow-circle-left"></i>
+                  </ng-template>
+                  <ng-template #next>
+                    <i class="ngx-gallery-icon-content fa fa-arrow-circle-right"></i>
+                  </ng-template>
+                  <ng-template #item let-item let-i="index">
+
+                    <div class="carouselItems" *ngFor="let concession of propertyDetail?.concessions">
+                      <div class="rental">
+                        <!-- offer box -->
+                        <div class="rental-title">
+                          {{concession?.description_header}}
+                        </div>
+                        <p>
+                          {{concession?.description_body}}
+                        </p>
+                        <a href="javascript: void(0);" style="color: #AF2048 !important;">Call for details </a>
+                      </div>
+                    </div>
+
+                  </ng-template>
+                </div>
+              </div>
+
+              <div class="match-box">
+                <h5 class="text-uppercase theam-color text-center" style="font-size: 1.95rem;">How it matches your profile </h5>
+
+                <div class="modal-signup row">
+                  <div class="col-xs-6 col-sm-3 col-md-3">
+                    <div class="selection-box" data-size="0" style="transform: scaleX(1) scaleY(1);">
+                      <div class="selection-box-icon">S</div>
+                      <div class="selection-box-label">Studio</div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-md-3 col-sm-3">
+                    <div class="selection-box" data-size="0" style="transform: scaleX(1) scaleY(1);">
+                      <div class="selection-box-icon">1</div>
+                      <div class="selection-box-label">bed</div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-md-3 col-sm-3">
+                    <div class="selection-box" data-size="0" style="transform: scaleX(1) scaleY(1);">
+                      <div class="selection-box-icon">2</div>
+                      <div class="selection-box-label">beds</div>
+                    </div>
+                  </div>
+                  <div class="col-xs-6 col-md-3 col-sm-3">
+                    <div class="selection-box" data-size="0" style="transform: scaleX(1) scaleY(1);">
+                      <div class="selection-box-icon">3+</div>
+                      <div class="selection-box-label">beds</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row" style="padding: 20px;">
+                  <div class="col-sm-6 unit">
+                    <div class="row" style="margin: 0px;">
+                      <h3>Unit</h3>
+                      <ul class="property__params-list property__params-list--options">
+                        <li *ngFor="let unitList of propertyDetail?.unit_highlights_list">{{unitList}}</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 community">
+                    <div class="row" style="margin: 0px;">
+                      <h3>Community</h3>
+                      <ul class="property__params-list property__params-list--options">
+                        <li *ngFor="let communityList of propertyDetail?.property_highlights_list"> {{communityList}}</li>
+                      </ul>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="panel-theam" id="location">
+                  <div class="panel-them-title text-center">
+                    <div class="panel-title-content">Location</div>
+                    <p>{{propertyDetail?.address_dict?.address}}</p>
+                  </div>
+                  <div *ngIf="propertyDetail?.address_dict?.location_coords?.length>0">
+                    <agm-map [latitude]="latitude" [zoom]=17 [mapTypeId]="'roadmap'" [longitude]="longitude">
+                      <agm-marker [latitude]="latitude" [label]="street" [longitude]="longitude"></agm-marker>
+                    </agm-map>
+                  </div>
+                </div>
+                <div class="price" id="price">
+                  <div class="panel-them-title text-center">
+                    <div class="panel-title-content">Price And Availability</div>
+                    <p> Info Verified with The Club at Copperleaf about {{lastUpdated}} </p>
+                  </div>
+                  <div class="price-table-content">
+                    <div class="price-title">
+                      <span class="second-head text-right">
+                        <img src="assets/img/offer.png" alt="" class="pull-right img-responsive icon-image" style="margin-left: 10px;">Special Concession Available</span>
+                      Latest Changes
+                      <i class="fa fa-plus" title="Add Unit" style="cursor:pointer;margin-left: 23px;font-size: 14px;" (click)="addNewUnit()"></i>
+                      <span class="second-head">In the last {{lastUpdated}}</span>
+                    </div>
+                    <table class="table " style="border : 0px !important;">
+                      <tbody class="unit" *ngFor="let unit of propertyDetail?.unit_split_up">
+                        <tr>
+                          <td colspan="4">
+                            <div class="panda-header blurrable ldp">
+                              <div class="col-sm-1 ">
+                                <div class="bed model-icon themed-bg Circle">{{unit?.bedrooms}}</div>
+                              </div>
+                              <div class="col-sm-11">
+                                <div class="model-details text-left">
+                                  <div class="model-title text-left">
+                                    {{unit?.Header}}
+                                  </div>
+                                  <div class="price-range" *ngIf="unit?.Data.length>1">
+                                    Price Range: ${{unit?.min}}-${{unit?.max}}
+                                  </div>
+                                  <div class="price-range" *ngIf="unit?.Data.length==1">
+                                    Price Range: ${{unit?.max}}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let unitPrice of unit?.Data;let i=index">
+                          <td *ngIf="i<=unit.Limit" style="width: 100px;padding: 0px;">
+                            <tr>
+                              <td>
+                                <img src="assets/img/build2.png" alt="" class="img-responsive icon-image" *ngIf="unitPrice?.concession_dict?.value === undefined">
+                                <img src="assets/img/offer.png" alt="" class="img-responsive icon-image" *ngIf="!unitPrice?.concession_dict?.value !== undefined">
+                              </td>
+                              <td>
+                                <i (click)="editUnitDetail(unitPrice?.unit_id)" style="cursor: pointer;margin-left: 10px;" class="fa fa-pencil" title="Edit"
+                                  aria-hidden="true"></i>
+                              </td>
+                            </tr>
+                          </td>
+                          <td *ngIf="i<=unit.Limit">Unit {{unitPrice?.identification_dict?.id_type}}</td>
+                          <td *ngIf="i<=unit.Limit"> {{avaliabitycheck(unitPrice?.availability_dict?.made_ready_date)}}</td>
+                          <td *ngIf="i<=unit.Limit">
+                            <div class="col-sm-12 padding-0 ">
+                              <div class="col-sm-2 padding-0 ">
+                                <span *ngIf="unitPrice.price_change>0">
+                                  <i class="fa fa-arrow-up" style="font-size: 14px;"></i>
+                                </span>
+                                <span *ngIf="unitPrice.price_change<0">
+                                  <i class="fa fa-arrow-down" style="font-size: 14px;">
+
+                                  </i>
+                                </span>
+
+                              </div>
+                              <div class="col-sm-10 padding-0 ">
+                                ${{unitPrice?.market_rent}}
+                              </div>
+                            </div>
+                          </td>
+                          <td *ngIf="i<=unit.Limit">
+                            <div (click)="showUnitDetail(unitPrice)" class="fa fa-search-plus" style="cursor: pointer" title="View Detail"></div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" *ngIf="unit?.Data.length>unit.Limit">
+                            <a class="more" (click)="expandUnit(unit)">+{{unit?.Data.length-4}} more</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="prize-info" style=" border-top: 1px solid #cbdce3;">
+                      <small>Prices may vary depending on lease length. We get our prices directly from The Club at Copperleaf.</small>
+                      <button class="btn btn-default">
+                        <i class="al al-floorplan"></i>
+                        See all available units and floorplans
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="basics" id="basics">
+                <div class="panel-them-title text-center">
+                  <div class="panel-title-content">The Basics</div>
+                </div>
+                <div class="basic-content">
+                  <div class=" galleryimage padding-0" id="highLights">
+                    <div>
+                      <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+                    </div>
+                  </div>
+                  <div class="basci-option">
+                    <div class="row">
+                      <div class="top-amenities-group col-sm-12">
+                        <div class="row">
+                          <div class="top-amenity col-sm-2 ipad_li" *ngFor="let future of propertyDetail?.prop_features">
+                            <div class="top-amenity-circle">
+                              <i class="fa fa-archive" aria-hidden="true"></i>
+                            </div>
+                            <div class="top-amenity-name">{{future?.name}}</div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="nitty" id="nitty">
+                <div class="panel-them-title text-center">
+                  <div class="panel-title-content">The Nitty Gritty</div>
+                </div>
+                <div class="nitty-content">
+                  <h4 class="price-title">Leasing Details
+
+                  </h4>
+                  <span *ngIf="propertyDetail?.lease_term>0">
+                    Lease Length: {{propertyDetail?.lease_term}}
+                  </span>
+                  <span *ngIf="propertyDetail?.income_requirement>0">
+                    <br> Income Requirement: ${{propertyDetail?.income_requirement | number : '1.2-2'}}
+                  </span>
+                  <br>
+
+                  <!-- Lease Length: 6-12 months Please note leases shorter than 12 months often have extra fees. Income Requirement: Must have
+                      3.0x the rent in total household income (before taxes, include income from all adults). -->
+                  <h4 class="price-title">Fees</h4>
+
+
+                  <span *ngIf="propertyDetail?.application_fee>0">
+                    Application Fee: ${{propertyDetail?.application_fee | number : '1.2-2'}}</span>
+                  <span *ngIf="propertyDetail?.roommate_deposit>0">
+                    <br>Roommate Deposit: ${{propertyDetail?.roommate_deposit | number : '1.2-2'}}</span>
+                  <span *ngIf="propertyDetail?.remodeling_fee>0">
+                    <br> Remodeling Fee: ${{propertyDetail?.remodeling_fee | number : '1.2-2'}}</span>
+                  <span *ngIf="propertyDetail?.security_deposit>0">
+                    <br> Security Deposit: ${{propertyDetail?.security_deposit | number : '1.2-2'}}</span>
+                  <span *ngIf="propertyDetail?.administrative_fee>0">
+                    <br> Administrative Fee: ${{propertyDetail?.administrative_fee | number : '1.2-2'}}</span>
+                  <br>
+                  <!-- Utilities: Renter responsible for all utilities Application Fee: $50 per applicant Move-in Fees: $300 admin fee Additional
+                      Fees: Renter's insurance required -->
+                  <h4 class="price-title">Pet Policy</h4>
+                  {{propertyDetail?.num_pets_allowed > 0 ? 'Pets allowed' : 'Pets not allowed'}}
+                  <div *ngIf="propertyDetail?.num_pets_allowed > 0">
+                    Pet limit: {{propertyDetail?.num_pets_allowed}} pets
+                    <br> Maximum Pet fee: ${{propertyDetail?.pet_fee | number : '1.2-2'}} per pet
+                  </div>
+                  <!-- Pets allowed: Cats Pet limit: 2 pets maximum Pet fee: $200 per pet -->
+                  <h4 class="price-title">Parking</h4>
+                  {{propertyDetail?.parking_policy_dict?.num_parking_allowed > 0 ? 'Parking allowed' : 'Parking not allowed'}}
+                  <div *ngIf="propertyDetail?.parking_policy_dict?.num_parking_allowed > 0">
+                    Parking limit: {{propertyDetail?.parking_policy_dict?.num_parking_allowed}}
+                    <br> Maximum Parking fee: ${{propertyDetail?.parking_policy_dict?.parking_fee | number : '1.2-2'}}
+                  </div>
+                  <!-- Parking Details: Garage lot. Covered lot. -->
+                </div>
+              </div>
+              <div class="review" id="review">
+                <div class="panel-them-title text-center">
+                  <div class="panel-title-content">What Others Are Saying</div>
+                  <p> Info Verified with The Club at Copperleaf about {{lastUpdated}} </p>
+                </div>
+                <div class="review-content">
+                  <h3>1.5</h3>
+                  <div class="star-rating">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <div class="review-details">
+                      4 Yelp Reviews 0 Property Responses
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!--- left side detil page end -->
+          </div>
+
+
+          <div class="col-sm-3">
+            <div class="detailpage-right text-center">
+              <!--- right fixed div -->
+              <p>Add places to your Short List by tapping “love it” or “maybe” to compare later</p>
+              <button class="btn btn-primary" (click)="AddtoCartClick('Love It')">
+                <i class="fa rose fa-gratipay" aria-hidden="true"></i> Love It</button>
+              <button class="btn btn-default" (click)="AddtoCartClick('May Be')">
+                <i class="fa blue fa-check" aria-hidden="true"></i> May Be</button>
+              <button class="btn btn-default" (click)="AddtoCartClick('Nope')">
+                <i class="fa red fa-times-circle-o" aria-hidden="true"></i> Nope</button>
+              <p class="bottom-conent">
+                This place is getting noticed
+              </p>
+            </div>
+            <!--- right fixed div -->
+          </div>
+        </div>
+
+
+      </div>
+      <!-- container end here -->
+    </div>
+    <!-- content div end here -->
+
+
+
+  </div>
+  <!-- overall page control end -->
+
+  <footer>
+    <footercomponent></footercomponent>
+  </footer>
+
+
+
+
+  <style>
+    .content-div .container {
+      background: none;
+      padding: 0px;
+    }
+  </style>
+
+
+  <p-dialog [(visible)]="isApartmentView" styleClass="apartmentDetailPopup" modal="modal" [responsive]="true" [height]="500"
+    [minWidth]="200">
+    <p-header>
+      <div class="col-sm-12">
+        <div class="card-headerbg">
+          <div class="col-sm-12 padding-0">
+            <div>
+              <label class="headerTitle">PRICE AND AVAILABILITY</label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </p-header>
+    <div class="col-sm-12 " style="padding: 0px;height: 410px;">
+      <div class="col-sm-12 unitDetailHolder">
+        <div class="price-title">
+          Latest Changes
+          <span class="second-head">In the last 4 days</span>
+        </div>
+
+        <div class="col-sm-12">
+          <div class="col-sm-3">
+            <p style="font-size: 15px;"> Unit {{selected_model?.identification_dict?.id_type}}</p>
+          </div>
+          <div class="col-sm-6">
+            <p style="font-size: 15px;"> {{avaliabitycheck(selected_model?.availability_dict?.made_ready_date) }}</p>
+          </div>
+          <div class="col-sm-2">
+            <p style="font-size: 15px;"> ${{selected_model?.market_rent | number : '1.2-2'}}</p>
+          </div>
+          <div class="col-sm-1" style="    text-align: right; cursor: pointer">
+            <i class="	fa fa-building-o" (click)="showFloorPlan(selected_model)"> </i>
+          </div>
+        </div>
+
+
+        <div class="col-sm-12 galleryimage padding-0" id="floorPlane_" id="floorPlane_" style="display: none">
+          <div>
+            <ngx-gallery [options]="galleryOptions" [images]="floorPlanPath"></ngx-gallery>
+          </div>
+        </div>
+
+
+        <div class="col-sm-12">
+          <div class="rental">
+            <div class="rental-title">
+              {{selected_model?.concession_dict?.description_header}}
+            </div>
+            <p>
+              {{selected_model?.concession_dict?.description_body}}
+            </p>
+            <a href="javascript: void(0);" style="color: #AF2048 !important;">Call for details </a>
+          </div>
+        </div>
+        <div class="col custom-list" *ngIf="selected_model?.features?.length>0">
+          <h4> Unit</h4>
+          <ul>
+            <div class="col-sm-4 fiftypercentwidth" *ngFor="let future of selected_model?.features">
+              <li style="font-size: 15px;">
+                <span class="option">{{future?.name}}</span>
+              </li>
+            </div>
+
+          </ul>
+
+        </div>
+
+
+      </div>
+
+    </div>
+    <p-footer>
+      <button type="button" class="btn btn-secondary" (click)="isApartmentView=false">Close</button>
+    </p-footer>
+  </p-dialog>
+</div>
+
+</html>

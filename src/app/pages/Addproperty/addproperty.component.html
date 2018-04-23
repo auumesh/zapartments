@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ZApartment Listing Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<!-- <body> -->
+<div class="bodyContent">
+  <headermenu></headermenu>
+
+
+  <div class="addNewPropertylist container-fluid" style="background-color: #eef3f5; padding: 35px;">
+    <ng2-toasty [position]="'top-center'"></ng2-toasty>
+    <div class="" id="property-listings">
+      <div>
+        <i class="fa fa-sort-amount-asc expant accorditionToggleIcon  accorditionToggle" style="cursor: pointer;" title="Section Toggle"
+          (click)="toggleAccordion()"></i>
+      </div>
+      <h5 style="font-size: 17px;font-weight: 600;">{{propertyAction == 'add' ? 'Add' : 'Update'}} {{addType == 'property' ? 'Property' : 'Unit'}}</h5>
+      <div class="row">
+        <div class="col-sm-12">
+          <p-accordion [multiple]="true">
+            <!-- Property -->
+            <p-accordionTab [selected]="accorditionToggle" header="{{propertyAction == 'add' ? 'Add' : 'Update'}} Property" [selected]="true"
+              *ngIf="(propertyAction == 'add' && addType == 'property') || (propertyAction == 'update' && addType == 'property' && propertyId != '')">
+              <div class="row ">
+                <div class="col-sm-6">
+                  <div class="form-group required">
+                    <label class="control-label" for="selfId">Property Name</label>
+                    <input type="text" required [(ngModel)]="propertyModel.name" #PropertyName="ngModel" class="form-control" name="propertyName"
+                    />
+                    <div *ngIf="(!(PropertyName.valid || (PropertyName.pristine &&!SubmitbtnClicked)))&&SubmitbtnClicked">
+                      <div [hidden]="PropertyName.valid || (PropertyName.pristine && 
+                        !SubmitbtnClicked)">
+                        <small class="text-danger">Property Name is required.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Description</label>
+                    <br>
+                    <textarea class="form-control" name="description" [(ngModel)]="propertyModel.description" required style="height: 79px !important"></textarea>
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="col-sm-6 padding-0">
+                      <div class="form-group">
+                        <label for="selfId">Phone Type</label>
+                        <input type="text" [(ngModel)]="commonVariable.phoneType" class="form-control" name="propertyName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group" style="margin-bottom: 0px;">
+                        <label for="selfId">Phone</label>
+                      </div>
+                      <div class="form-group">
+                        <p-inputMask mask="999-999-9999" [(ngModel)]="commonVariable.phone" styleClass="widthpercent" placeholder="999-999-9999"
+                          name="phone" id="phone"></p-inputMask>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-sm-1 addButtonBorder" style="margin-top: 20px;cursor:pointer;" (click)="addDataIntoModel('phone')">
+                      <i class="fa fa-plus" title="Add Data" style="cursor:pointer"></i>
+                    </div>
+                    <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.phone_list?.length>0">
+                      <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let phoneDet of propertyModel.phone_list; let index=index">
+                        <li class="propertyList">
+                          <div class="col-sm-12 padding-0">
+                            <div class="col-sm-10 highLightHolderText">
+                              <span title={{phoneDet.phone}}>{{phoneDet.phone}}</span>
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'phone')"></i>
+                              </span>
+                            </div>
+                            <div class="col-sm-1 padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'phone')"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="col-sm-6 padding-0">
+                      <div class="form-group">
+                        <label for="selfId">Email Type</label>
+                        <input type="text" [(ngModel)]="commonVariable.emailType" class="form-control" name="propertyName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="selfId">Email</label>
+                        <input type="email" [(ngModel)]="commonVariable.email" class="form-control" name="propertyName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-sm-1 addButtonBorder" style="    margin-top: 20px;cursor:pointer;" (click)="addDataIntoModel('email')">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                    <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.email_list?.length>0">
+                      <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let emailDet of propertyModel.email_list; let index=index">
+                        <li class="propertyList">
+                          <div class="col-sm-12 padding-0">
+                            <div class="col-sm-10 highLightHolderText">
+                              <span title="{{emailDet.email}}">{{emailDet.email}}</span>
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'email')"></i>
+                              </span>
+
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'email')"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Web Sites</label>
+                    <input type="url" [(ngModel)]="propertyModel.web_site" class="form-control" name="propertyName" />
+                    <div *ngIf="!this.commonService.validateURL(propertyModel.web_site,true)" class="text text-danger">
+                      <small>Invalid Web Sites.</small>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Property Highlights</label>
+                    <div class="col-sm-11 col-sm-11" style=" padding: 0px 6px 10px 0px">
+                      <input type="text" class="form-control" [(ngModel)]="property_highlights_list" name="propertyHighlightsName" />
+                    </div>
+                    <div class="col-sm-1 col-sm-1 addButtonBorder" style="cursor:pointer;" (click)="addPropertyHighLightsDetail()">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                    <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.property_highlights_list?.length>0">
+                      <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let propertyHigh of propertyModel.property_highlights_list; let index=index">
+                        <li class="propertyList">
+                          <div class="col-sm-12 padding-0">
+                            <div class="col-sm-10 highLightHolderText">
+                              <span title="{{propertyHigh}}">{{propertyHigh}}</span>
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'property')"></i>
+                              </span>
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'property')"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Leasing Term</label>
+                        <input type="text" OnlyNumber="true" [(ngModel)]="propertyModel.lease_term"
+                        (keypress)="_keyPress($event,propertyModel.lease_term,24)"
+                         class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Income Requirement</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.income_requirement"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Security Deposit</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.security_deposit"
+                          class="form-control" name="rentName" />
+                      </div>
+                      <div class="form-group">
+                        <label for="selfId">Roommate Deposit</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.roommate_deposit"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Application Fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.application_fee"
+                          class="form-control" name="rentName" />
+                      </div>
+                      <div class="form-group">
+                        <label for="selfId">Remodeling Fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.remodeling_fee"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="form-group">
+                      <label for="selfId">Administrative Fee</label>
+                      <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.administrative_fee"
+                        class="form-control" name="rentName" />
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId"># of Parking Allowed</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.parking_policy_dict.num_parking_allowed"
+                          class="form-control" name="rentName" min="0" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Parking Fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.parking_policy_dict.parking_fee"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Pet Fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.pet_fee"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Number of Pets Allowed</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.num_pets_allowed"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="col-sm-12 padding-0">
+                    <div class="form-group">
+                      <label for="selfId">Policy Type</label>
+                      <p-dropdown [options]="propertyType" [(ngModel)]="PolicyDist.policyType" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                        filter="filter" placeholder="Select Policy Type" name="Name"></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-sm-12  " style="margin-bottom: 5PX; border: 1px solid #ddd; padding: 15px;" *ngIf="PolicyDist.policyType=='Pets'">
+                    <div class="form-group">
+                      <label for="selfId">Pet Types</label>
+                      <div class="col-sm-11 col-sm-11" style=" padding: 0px 6px 10px 0px">
+                        <input type="text" class="form-control" [(ngModel)]="PolicyDist.pet_Name" name="propertyHighlightsName" />
+                      </div>
+                      <div class="col-sm-1 col-sm-1 addButtonBorder" (click)="addPolicyDistPet()" style="cursor:pointer;">
+                        <i class="fa fa-plus" title="Add Data"></i>
+                      </div>
+                      <div class="col-sm-12 highLightHolderDiv" *ngIf="PolicyDist?.pet_types?.length>0">
+                        <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let petdata of PolicyDist?.pet_types; let index=index">
+                          <li class="propertyList">
+                            <div class="col-sm-12 padding-0">
+                              <div class="col-sm-10 highLightHolderText">
+                                <span title={{petdata}}>{{petdata}}</span>
+                              </div>
+                              <div class="col-sm-1  padding-0">
+                                <span class="removeClass">
+                                  <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'pet')"></i>
+                                </span>
+                              </div>
+                              <div class="col-sm-1  padding-0">
+                                <span class="removeClass">
+                                  <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'pet')"></i>
+                                </span>
+                              </div>
+                            </div>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group ">
+                      <label class="control-label" for="selfId">Restriction</label>
+                      <br>
+                      <div class="col-sm-12 padding-0" style="margin-bottom: 10px;margin-right: 0px;">
+                        <div class="col-sm-12 padding-0">
+                          <textarea class="form-control" #restriction="ngModel" name="addressInfo" [(ngModel)]="PolicyDist.restriction" style="height: 79px !important"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row padding-0">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="selfId">Deposit</label>
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="PolicyDist.deposit"
+                            class="form-control" name="rentName" />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label for="selfId">Fee</label>
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="PolicyDist.fee"
+                            class="form-control" name="rentName" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row padding-0">
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <div class="col-sm-12 padding-0">
+                            <div class="form-group">
+                              <p-checkbox name="groupname" [(ngModel)]="PolicyDist.pet_care" binary=true></p-checkbox>
+                              <label for="selfId">Pet Care</label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+
+                          <div class="col-sm-2 addButtonBorder" style="float: right;cursor:pointer;" (click)="addPolicyDist()">
+                            <i class="fa fa-plus" title="Add Data"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12" style="margin-bottom: 5PX; border: 1px solid #ddd; padding: 15px;" *ngIf="PolicyDist.policyType=='Others'">
+                    <div class="col-sm-5  padding-0">
+                      <div class="form-group" style="margin-bottom: 0px;">
+                        <label for="selfId">Policy Name</label>
+                        <input type="text" [(ngModel)]="PolicyDist.policyName" class="form-control" name="policyName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group" style="margin-bottom: 0px;">
+                        <label for="selfId">Description</label>
+                        <input type="text" [(ngModel)]="PolicyDist.Description" class="form-control" name="Description" />
+                      </div>
+                    </div>
+                    <div class="col-sm-1 addButtonBorder" style="margin-top: 19px;cursor:pointer;" (click)="addPolicyDist()">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 highLightHolderDiv" style="margin-top: 10px;" *ngIf="propertyModel?.policy_dict?.length>0">
+                    <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let petdata of propertyModel?.policy_dict; let index=index">
+                      <li class="propertyList">
+                        <div class="col-sm-12 padding-0">
+                          <div class="col-sm-10 highLightHolderText">
+                            <span title={{petdata?.policyType}}></span>{{petdata?.policyType}}</div>
+                          <div class="col-sm-1  padding-0">
+                            <span class="removeClass">
+                              <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'pets')"></i>
+                            </span>
+                          </div>
+                          <div class="col-sm-1  padding-0">
+                            <span class="removeClass">
+                              <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'pets')"></i>
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="form-group">
+                      <label for="selfId">Service</label>
+                      <p-dropdown [options]="serviceList" [(ngModel)]="ServiceList.ServiceType" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                        filter="filter" placeholder="Select Service" name="ServiceType"></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-sm-12" style="margin-bottom: 5PX; border: 1px solid #ddd; padding: 15px;" *ngIf="ServiceList.ServiceType!=''">
+                    <div class="col-sm-5  padding-0">
+                      <div class="form-group" style="margin-bottom: 0px;">
+                        <label for="selfId">Distance To</label>
+                        <input type="text" [(ngModel)]="ServiceList.distance_to" class="form-control" name="policyName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group" style="margin-bottom: 0px;">
+                        <label for="selfId">Description</label>
+                        <input type="text" [(ngModel)]="ServiceList.Comment" class="form-control" name="Description" />
+                      </div>
+                    </div>
+                    <div class="col-sm-1 addButtonBorder" style="margin-top: 19px;cursor:pointer;" (click)="addComment()">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.services_list?.length>0">
+                    <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let serviceList of propertyModel?.services_list; let index=index">
+                      <li class="propertyList">
+                        <div class="col-sm-12 padding-0">
+                          <div class="col-sm-3 highLightHolderText">
+                            <span title={{serviceList?.ServiceType}}>{{serviceList?.ServiceType}}</span>
+                          </div>
+                          <div class="col-sm-7 highLightHolderText">
+                            <span title={{serviceList?.distance_to}}>- {{serviceList?.distance_to}}</span>
+                          </div>
+                          <div class="col-sm-1  padding-0">
+                            <span class="removeClass">
+                              <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'services_list')"></i>
+                            </span>
+                          </div>
+                          <div class="col-sm-1  padding-0">
+                            <span class="removeClass">
+                              <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'services_list')"></i>
+                            </span>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="col-sm-12 padding-0">
+                        <div class="form-group">
+                          <div class="col-sm-11 col-sm-11" style=" padding: 0px 6px 10px 0px">
+                            <label for="selfId">Types</label>
+                            <input type="text" class="form-control" [(ngModel)]="parkingpolicydict.Types" name="propertyHighlightsName" placeholder="Enter Type Detail"
+                            />
+                          </div>
+                          <div class="col-sm-1 col-sm-1 addButtonBorder" style="margin-top: 20px;cursor:pointer;" (click)="addparkingpolicyType()">
+                            <i class="fa fa-plus" title="Add Data"></i>
+                          </div>
+                          <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.parking_policy_dict?.types?.length>0">
+                            <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let petdata of propertyModel?.parking_policy_dict?.types; let index=index">
+                              <li class="propertyList">
+                                <div class="col-sm-12 padding-0">
+                                  <div class="col-sm-8 highLightHolderText">
+                                    <span title={{petdata}}>{{petdata}}</span>
+                                  </div>
+                                  <div class="col-sm-2  padding-0">
+                                    <span class="removeClass">
+                                      <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'Types')"></i>
+                                    </span>
+                                  </div>
+                                  <div class="col-sm-2  padding-0">
+                                    <span class="removeClass">
+                                      <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'Types')"></i>
+                                    </span>
+                                  </div>
+                                </div>
+                              </li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="col-sm-12 padding-0">
+                        <div class="form-group">
+                          <label for="selfId">Parking Type</label>
+                          <div class="col-sm-11 col-sm-11" style=" padding: 0px 6px 10px 0px">
+                            <input type="text" class="form-control" [(ngModel)]="parkingpolicydict.ParkingType" name="propertyHighlightsName" placeholder="Enter Parking Type Detail"
+                            />
+                          </div>
+                          <div class="col-sm-1 col-sm-1 addButtonBorder" style="cursor:pointer;" (click)="addparkingType()">
+                            <i class="fa fa-plus" title="Add Data"></i>
+                          </div>
+                          <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.parking_policy_dict?.parking_type?.length>0">
+                            <div class="col-sm-6 padding-0 " [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let petdata of propertyModel?.parking_policy_dict?.parking_type; let index=index">
+                              <li class="propertyList">
+                                <div class="col-sm-12 padding-0">
+                                  <div class="col-sm-8 highLightHolderText">
+                                    <span title="{{petdata}}">{{petdata}}</span>
+                                  </div>
+                                  <div class="col-sm-2  padding-0">
+                                    <span class="removeClass">
+                                      <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'ParkingType')"></i>
+                                    </span>
+                                  </div>
+                                  <div class="col-sm-2  padding-0">
+                                    <span class="removeClass">
+                                      <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'ParkingType')"></i>
+                                    </span>
+                                  </div>
+                                </div>
+                              </li>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Spaces</label>
+                        <input type="text" [(ngModel)]="propertyModel.parking_policy_dict.spaces" #spaces="ngModel" name="spaces" class="form-control"
+                          name="spaces" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Space Fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="propertyModel.parking_policy_dict.space_fee"
+                          #spacefee="ngModel" name="space_fee" class="form-control" name="space_fee" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Comment</label>
+                        <input type="text" [(ngModel)]="propertyModel.parking_policy_dict.comment" #comment="ngModel" name="comment" class="form-control"
+                          name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Restriction</label>
+                        <input type="text" [(ngModel)]="propertyModel.parking_policy_dict.restriction" #restriction="ngModel" name="restriction"
+                          class="form-control" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="control-label" for="selfId">Features</label>
+                    <p-multiSelect [options]="featureIdList" [(ngModel)]="propertyModel.feature_ids_list" class="ruleDropDownDesign" name="propertyFeatures"
+                      filter="filter" placeholder="Select Apartment Type" name="Name" #NameValid="ngModel" required></p-multiSelect>
+                    <div *ngIf="propertyModel?.feature_ids_list?.length==0 && SubmitbtnClicked">
+                      <div [hidden]="!(propertyModel?.feature_ids_list?.length==0 && SubmitbtnClicked)">
+                        <small class="text-danger">Features is required. </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group required">
+                    <label class="control-label" for="selfId">Address</label>
+                    <br>
+                    <div class="col-sm-12 padding-0" style="margin-bottom: 10px;margin-right: 0px;">
+                      <div class="col-sm-12 padding-0">
+                        <textarea class="form-control" #address="ngModel" name="addressInfo" [(ngModel)]="addressInfo" required style="height: 79px !important"></textarea>
+                        <div *ngIf="(!(address.valid || (address.pristine && 
+                        !SubmitbtnClicked)))">
+                          <div [hidden]="address.valid || (address.pristine && 
+                            !SubmitbtnClicked)">
+                            <small class="text-danger">Address is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Unit Highlights</label>
+                    <div class="col-sm-11 col-sm-11" style=" padding: 0px 6px 10px 0px">
+                      <input type="text" [(ngModel)]="unit_highlights_list" class="form-control" name="unitHighlightsName" />
+                    </div>
+                    <div class="col-sm-1 col-sm-1 addButtonBorder" (click)="addUnitHighLightsDetail()" style="cursor:pointer;">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                    <div class="col-sm-12 highLightHolderDiv" *ngIf="propertyModel?.unit_highlights_list?.length>0">
+                      <div class="col-sm-6 padding-0" [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let unitHigh of propertyModel.unit_highlights_list; let index=index">
+                        <li class="propertyList">
+                          <div class="col-sm-12 padding-0">
+                            <div class="col-sm-10 highLightHolderText">
+                              <span title="{{unitHigh}}">{{unitHigh}}</span>
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'unit')"></i>
+                              </span>
+
+                            </div>
+                            <div class="col-sm-1 padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'unit')"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Property Image</label>
+                    <p-fileUpload name="demo[]" customUpload="true" [showUploadButton]="false" (onSelect)="fileLoadIntoModel($event,'property')"
+                      (onRemove)=Removeproperty($event) multiple="multiple" accept="image/*" maxFileSize="1000000" styleClass="imagescroll">
+                    </p-fileUpload>
+                  </div>
+
+                  <div class="col-sm-12" *ngIf="(propertyAction == 'update' && propertyId != '' && updateFileDetails?.length>0)">
+                    <div class="form-group">
+                      <label for="selfId"> Old Files</label>
+                    </div>
+                    <div class="col-sm-12 padding-0" style="max-height: 140px; overflow-y: scroll;">
+                      <div class="col-sm-12  padding-0 ui-fileupload-files" *ngFor="let savedImages of updateFileDetails;let index=index">
+                        <div class="col-sm-12 padding-0 ui-fileupload-row">
+                          <div class="col-sm-3 padding-0">
+                            <img [src]="savedImages?.file_url" width="50">
+                          </div>
+                          <div class="col-sm-7 padding_left_right">{{savedImages?.name}}</div>
+                          <div class="col-sm-2   ">
+                            <button icon="fa-close" pbutton="" (click)="removeUploadedImage(savedImages?.file_id,index,'property')" type="button" ng-reflect-icon="fa-close"
+                              class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
+                              <span class="ui-button-icon-left ui-clickable fa fa-fw fa-close"></span>
+                              <span class="ui-button-text ui-clickable">ui-btn</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </p-accordionTab>
+            <!-- Floor Plans -->
+            <p-accordionTab [selected]="accorditionToggle" header="{{propertyAction == 'add' ? 'Add' : 'Update'}} Floor Plans" *ngIf="(propertyAction == 'add' && addType == 'property') || (propertyAction == 'update' && addType == 'property' && propertyId != '')">
+              <div class="row eql_row">
+                <div class="col-sm-4 leftDotted propertywidthheader">
+                  <div class="form-group required">
+                    <label for="selfId" class="control-label">Property Highlights Name</label>
+                    <input type="text" [(ngModel)]="floorPlanModel.name" required #PropertyHighlights="ngModel" class="form-control" [ngModelOptions]="{standalone: true}"
+                    />
+                    <div *ngIf="(!(PropertyHighlights.valid || (PropertyHighlights.pristine && 
+                      !floorPlanSubmit)))&&floorPlanSubmit">
+                      <div [hidden]="PropertyHighlights.valid || (PropertyHighlights.pristine && 
+                          !floorPlanSubmit)">
+                        <small class="text-danger">Property Highlights Name is required.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Description</label>
+                    <br>
+                    <textarea class="form-control" [(ngModel)]="floorPlanModel.description" name="highlightsDesc" required style="height: 90px !important"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Unit Type Description</label>
+                    <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                      <p-dropdown [options]="kindTypeDropdown" [(ngModel)]="floorPlanModel.unit_type_description" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                        filter="filter" placeholder="Select Unit Type Description" name="Name" #kindType="ngModel" required></p-dropdown>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="col-sm-6  padding-0">
+
+                      <div class="form-group required">
+                        <label for="selfId" class="control-label">Room Type</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <p-dropdown [options]="roomTypeDropdown" [(ngModel)]="floorPlanRoomType" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                            filter="filter" placeholder="Select Room Type" name="roomType" #NameValid="ngModel"></p-dropdown>
+                          <div *ngIf="floorPlanRoomType==0 && roomtypeClicked">
+                            <div [hidden]="!(floorPlanRoomType==0 && roomtypeClicked)">
+                              <small class="text-danger">Room Type is required. </small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group required">
+                        <label for="selfId" class="control-label">Count</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" [(ngModel)]="floorPlanCount" class="form-control" #Count="ngModel" required OnlyNumber="true" DecimalPlaces="2"
+                            minValue="1.00" maxValue="99999.00" name="roomTypeCount" />
+
+                          <div *ngIf="(!(Count.valid || (Count.pristine && 
+                            !roomtypeClicked))&&roomtypeClicked)">
+                            <div [hidden]="Count.valid || (Count.pristine && 
+                                !roomtypeClicked)">
+                              <small class="text-danger">Count is required.</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-5">
+                      <div class="form-group">
+                        <label for="selfId">Comment</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <textarea class="form-control" maxlength="1000" [(ngModel)]="floorPlanComment" name="highlightsDesc" style="height: 94px !important"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-1 col-sm-1 addButtonBorder" style="margin-top: 12%;cursor:pointer;" (click)="addRoomTypeList()">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                    <div class="col-sm-12 highLightHolderDiv" *ngIf="floorPlanModel?.room_types_list?.length>0">
+                      <div class="col-sm-6 padding-0" [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let roomType of floorPlanModel?.room_types_list; let index=index">
+                        <li class="propertyList">
+                          <div class="col-sm-12 padding-0">
+                            <div class="col-sm-10 highLightHolderText">
+                              <span title="{{roomType.count}}-{{roomType.room_type}}">{{roomType.count}}-{{roomType.room_type}}</span>
+                            </div>
+
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'roomType')"></i>
+                              </span>
+                            </div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'roomType')"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    </div>
+                    <div class="col-sm-12 padding-0" *ngIf="floorPlanModel?.room_types_list?.length==0 && floorPlanSubmit ">
+                      <div [hidden]="!(floorPlanModel?.room_types_list?.length==0 && floorPlanSubmit)">
+                        <small class="text-danger">Room List is required. </small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Rent</label>
+                    <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.rent" class="form-control" name="rentName" />
+                  </div>
+
+                </div>
+                <div class="col-sm-4 leftDotted propertywidth">
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Deposit Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" 
+                        maxValue="999999999.00" 
+                        [(ngModel)]="floorPlanModel.deposit_dict.amount_dict.value_range.min"
+                        (blur)="deptminMaxValidation()"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Deposit Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" 
+                        (blur)="deptminMaxValidation()"
+                        minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.deposit_dict.amount_dict.value_range.max"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Amount Type</label>
+                        <p-dropdown [options]="amountTypeDropdown" [(ngModel)]="floorPlanModel.deposit_dict.amount_dict.amount_type" class="ruleDropDownDesign"
+                          [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Amount Type" name="roomType"
+                          #NameValid="ngModel" required></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Deposit Type</label>
+                        <p-dropdown [options]="depositTypeDropdown" [(ngModel)]="floorPlanModel.deposit_dict.deposit_type" class="ruleDropDownDesign"
+                          [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Deposit Type" name="roomType"
+                          #NameValid="ngModel" required></p-dropdown>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group required">
+                        <label class="control-label" for="selfId">Sqft Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" required #SqftMin="ngModel"
+                          [(ngModel)]="floorPlanModel.sqft_dict.min" class="form-control" (blur)="minMaxValidation('sqft_dict')"
+                          name="SqftMin_rentName" />
+                        <div *ngIf="(!(SqftMin.valid || (SqftMin.pristine && 
+                            !floorPlanSubmit)))&&floorPlanSubmit">
+                          <div [hidden]="SqftMin.valid || (SqftMin.pristine && 
+                                !floorPlanSubmit)">
+                            <small class="text-danger">Sqft Min is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group required">
+                        <label class="control-label" for="selfId">Sqft Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" (blur)="minMaxValidation('sqft_dict')" minValue="1.00" maxValue="999999999.00"
+                          [(ngModel)]="floorPlanModel.sqft_dict.max" #SqftMax="ngModel" required class="form-control" name="SqftMax_rentName"
+                        />
+                        <div *ngIf="(!(SqftMax.valid || (SqftMax.pristine && 
+                            !floorPlanSubmit)))&&floorPlanSubmit">
+                          <div [hidden]="SqftMax.valid || (SqftMax.pristine && 
+                                !floorPlanSubmit)">
+                            <small class="text-danger">Sqft Max is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Market Rent Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.market_rent_dict.min"
+                          (blur)="minMaxValidation('market_rent_dict')" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Market Rent Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" (blur)="minMaxValidation('market_rent_dict')"
+                          [(ngModel)]="floorPlanModel.market_rent_dict.max" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Effective Rent Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.effective_rent_dict.min"
+                          (blur)="minMaxValidation('effective_rent_dict')" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Effective Rent Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.effective_rent_dict.max"
+                          (blur)="minMaxValidation('effective_rent_dict')" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-4 ">
+                      <div class="form-group">
+                        <label for="selfId">Prorate Type</label>
+                        <p-dropdown [options]="prorateTypeDropdown" [(ngModel)]="floorPlanModel.fee_dict.prorate_type" class="ruleDropDownDesign"
+                          [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Prorate Type" name="roomType"
+                          #NameValid="ngModel"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 ">
+                      <div class="form-group">
+                        <label for="selfId">Late Type</label>
+                        <p-dropdown [options]="lateTypeDropdown" [(ngModel)]="floorPlanModel.fee_dict.late_type" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                          filter="filter" placeholder="Select Late Type" name="roomType" #NameValid="ngModel"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-4 ">
+                      <div class="form-group">
+                        <label for="selfId">Late Percent</label>
+                        <input type="text"  OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.late_percent" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Late Min fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.late_min_fee"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Late fee per day</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.late_fee_per_day"
+                          class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 propertywidth">
+                  <div class="row padding-0">
+                    <div class="col-sm-4" style="padding-right: 0;">
+                      <div class="form-group">
+                        <label for="selfId">Non Refundable fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.non_refundable_hold_fee" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Admin fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.admin_fee" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Application fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.application_fee" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Broker fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.fee_dict.broker_fee" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Total Unit</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.total_units" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Unit Available</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="floorPlanModel.units_available" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Comments</label>
+                    <br>
+                    <textarea class="form-control" name="comments" maxlength="1000" [(ngModel)]="floorPlanModel.comments" style="height: 92px !important"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Floor Plan Image</label>
+                    <p-fileUpload name="floorPlanImage[]" customUpload="true" [showUploadButton]="false" (onSelect)="fileLoadIntoModel($event,'floorPlan')"
+                      [files]=floorPlanImage multiple="multiple" accept="image/*" maxFileSize="1000000" (onRemove)=RemveFloorPlan($event)>
+                      <ng-template pTemplate="content">
+                        <ul *ngIf="floorPlanUploadedFiles.length">
+                        </ul>
+                      </ng-template>
+                    </p-fileUpload>
+                  </div>
+                  <div class="col-sm-12" *ngIf="(propertyAction == 'update' && floor_plan_id != ''
+                   && floorPlanUploadedFilesdata?.length>0)">
+                    <div class="form-group">
+                      <label for="selfId"> Old Files</label>
+                    </div>
+                    <div class="col-sm-12 padding-0" style="max-height: 140px; overflow-y: scroll;">
+                      <div class="col-sm-12  padding-0 ui-fileupload-files" *ngFor="let savedImages of floorPlanUploadedFilesdata;let index=index">
+                        <div class="col-sm-12 padding-0 ui-fileupload-row">
+                          <div class="col-sm-3 padding-0">
+                            <img [src]="savedImages?.file_url" width="50">
+                          </div>
+                          <div class="col-sm-7 padding_left_right">{{savedImages?.name}}</div>
+                          <div class="col-sm-2">
+                            <button icon="fa-close" pbutton="" (click)="removeUploadedImage(savedImages?.file_id,index,'floorPlan')" type="button" ng-reflect-icon="fa-close"
+                              class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
+                              <span class="ui-button-icon-left ui-clickable fa fa-fw fa-close"></span>
+                              <span class="ui-button-text ui-clickable">ui-btn</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="apartSuccessBtn" style="margin-top: 20px;" (click)="addFloorPlanIntoModel()">{{U_floorplanindex!=0?'Update':'Add'}}</button>
+                  </div>
+                </div>
+                <div class="col-sm-12" style="margin-top: 10px;" *ngIf="floorPlanGridDetail.length>0">
+                  <p-dataTable [value]="floorPlanGridDetail" [immutable]="false">
+                    <p-column field="HighlightsName" header="Action" [style]="{'width':'50px'}">
+                      <ng-template let-index="rowIndex" let-detail="rowData" pTemplate="body">
+                        <div class="col-sm-6" style="padding: 0px">
+                          <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editTheFloorPlan(index)"></i>
+                        </div>
+                        <div class="col-sm-6" style="padding: 0px">
+                          <i class="fa fa-remove" style="cursor:pointer" title="Remove" (click)="removeTheFloorPlan(index)"></i>
+                        </div>
+                      </ng-template>
+                    </p-column>
+                    <p-column field="HighlightsName" header="Property Highlights Name"></p-column>
+                    <p-column field="Description" header="Description "></p-column>
+                    <p-column field="Rent" header="Rent"></p-column>
+                  </p-dataTable>
+                </div>
+              </div>
+            </p-accordionTab>
+            <!-- Units -->
+
+            <p-accordionTab [selected]="accorditionToggle" header="{{propertyAction == 'add' ? 'Add' : 'Update'}} Units" [selected]="true"
+              *ngIf="addType == 'unit'">
+              <div class="row eql_row">
+                <div class="col-sm-4 leftDotted propertywidthheader">
+                  <div class="form-group">
+                    <label for="selfId">Floor Plan</label>
+                    <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                      <p-dropdown [options]="floorPlanDropdown" (onChange)="getFloorPlanDetailForUnit()" [(ngModel)]="unitSavedModel.floor_plan_id"
+                        class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Floor Plan"
+                        name="floor_plan_id" #floorPlan="ngModel"></p-dropdown>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="selfId">Unit Type</label>
+                    <input type="text" [(ngModel)]="unitSavedModel.unit_type" class="form-control" name="UnitType" />
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Deposit Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.deposit_dict.amount_dict.value_range.min"
+                          class="form-control" name="value_rangeMin" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Deposit Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.deposit_dict.amount_dict.value_range.max"
+                          class="form-control" name="value_rangeMax" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Amount Type</label>
+                        <p-dropdown [options]="amountTypeDropdown" [(ngModel)]="unitSavedModel.deposit_dict.amount_dict.amount_type" class="ruleDropDownDesign"
+                          [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Amount Type" name="amount_dictAmount_type"
+                          #NameValid="ngModel"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Deposit Type</label>
+                        <p-dropdown [options]="depositTypeDropdown" [(ngModel)]="unitSavedModel.deposit_dict.deposit_type" class="ruleDropDownDesign"
+                          [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Deposit Type" name="deposit_dictDeposit_type"
+                          #NameValid="ngModel"></p-dropdown>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Late Min fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.fee_dict.late_min_fee"
+                          class="form-control" name="fee_dictLate_min_fee" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Late fee per day</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.fee_dict.late_fee_per_day"
+                          class="form-control" name="fee_dictLate_fee_per_day" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Identification Id value</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.identification_dict.id_value"
+                          class="form-control" name="identification_dictId_value" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Identification Id Type</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.identification_dict.id_type"
+                          class="form-control" name="identification_dictId_type" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group required">
+                        <label for="selfId" class="control-label">Bed Room</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.bedrooms"
+                            class="form-control" name="bedrooms" #BedRoomID="ngModel" required/>
+                          <div *ngIf="!(BedRoomID.valid || (BedRoomID.pristine && 
+                              !SubmitbtnClicked))">
+                            <div [hidden]="BedRoomID.valid || (BedRoomID.pristine && 
+                                  !SubmitbtnClicked)">
+                              <small class="text-danger">Bed Room is required.</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group required">
+                        <label for="selfId" class="control-label">Bath Room</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.bathrooms"
+                            #bathroomID="ngModel" required class="form-control" name="bathrooms" />
+                          <div *ngIf="!(bathroomID.valid || (bathroomID.pristine && 
+                              !SubmitbtnClicked))">
+                            <div [hidden]="bathroomID.valid || (bathroomID.pristine && 
+                                  !SubmitbtnClicked)">
+                              <small class="text-danger">Bath Room is required.</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Prorate Type</label>
+                        <p-dropdown [options]="prorateTypeDropdown" [(ngModel)]="unitSavedModel.fee_dict.prorate_type" class="ruleDropDownDesign"
+                          [ngModelOptions]="{standalone: true}" filter="filter" placeholder="Select Prorate Type" name="fee_dictProrate_type"
+                          #NameValid="ngModel"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Late Type</label>
+                        <p-dropdown [options]="lateTypeDropdown" [(ngModel)]="unitSavedModel.fee_dict.late_type" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                          filter="filter" placeholder="Select Late Type" name="fee_dictlate_type"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Late Percent</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.fee_dict.late_percent"
+                          class="form-control" name="fee_dictLate_percent" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row padding-0">
+                    <div class="col-sm-4" style="padding-right: 0;">
+                      <div class="form-group">
+                        <label for="selfId">Non Refundable fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.fee_dict.non_refundable_hold_fee"
+                          class="form-control" name="fee_dictNon_refundable_hold_fee" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Admin fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.fee_dict.admin_fee"
+                          class="form-control" name="fee_dictAdmin_fee" />
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <label for="selfId">Application fee</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.fee_dict.application_fee"
+                          class="form-control" name="fee_dictApplication_fee" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4 leftDotted propertywidth">
+                  <div class="form-group required">
+                    <label for="selfId" class="control-label">Market Rent</label>
+                    <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.market_rent"
+                      #marketrent="ngModel" required class="form-control" name="market_rent_dict" />
+                    <div *ngIf="!(marketrent.valid || (marketrent.pristine && 
+                        !SubmitbtnClicked))">
+                      <div [hidden]="marketrent.valid || (marketrent.pristine && 
+                            !SubmitbtnClicked)">
+                        <small class="text-danger">Market Rent is required.</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Economic Status</label>
+                    <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.economic_status"
+                      class="form-control" name="economic_status" />
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Occupancy Status</label>
+                    <input type="text" [(ngModel)]="unitSavedModel.occupancy_status" class="form-control" name="occupancy_status" />
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Comment</label>
+                    <br>
+                    <textarea class="form-control" maxlength="1000" [(ngModel)]="unitSavedModel.comment" required style="height: 92px !important"></textarea>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId" class="control-label">Effective Rent Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.effective_rent_dict.min"
+                          class="form-control" name="effective_rent_dictMin" />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Effective Rent Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.effective_rent_dict.max"
+                          class="form-control" name="effective_rent_dictMax" />
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group required">
+                        <label for="selfId" class="control-label">Sqft Min</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" #SqftMin="ngModel" required
+                          [(ngModel)]="unitSavedModel.sqft_dict.min" class="form-control" name="sqft_dictMin" />
+                        <div *ngIf="!(SqftMin.valid || (SqftMin.pristine && 
+                            !SubmitbtnClicked))">
+                          <div [hidden]="SqftMin.valid || (SqftMin.pristine && 
+                                !SubmitbtnClicked)">
+                            <small class="text-danger">Sqft Min is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group required">
+                        <label for="selfId" class="control-label">Sqft Max</label>
+                        <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.sqft_dict.max"
+                          #SqftMaxData="ngModel" required class="form-control" name="sqft_dictMax" />
+                        <div *ngIf="!(SqftMaxData.valid || (SqftMaxData.pristine && 
+                            !SubmitbtnClicked))">
+                          <div [hidden]="SqftMaxData.valid || (SqftMaxData.pristine && 
+                                !SubmitbtnClicked)">
+                            <small class="text-danger">Sqft Max is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="col-sm-6  padding-0">
+                      <div class="form-group">
+                        <label for="selfId">Effective Rent</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" #EffectivePrice="ngModel"
+                            required [(ngModel)]="commonVariable.rentEffectivePrice" class="form-control" name="rentEffectivePrice"
+                          />
+                          <div *ngIf="!(EffectivePrice.valid || (EffectivePrice.pristine && 
+                              !floorPlanSubmit))">
+                            <div [hidden]="EffectivePrice.valid || (EffectivePrice.pristine && 
+                                  !floorPlanSubmit)">
+                              <small class="text-danger">Effective Rent is required.</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="selfId ">Term</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="commonVariable.rentEffectiveTerm"
+                            #EffectiveTerm="ngModel" required class="form-control" name="rentEffectiveTerm" />
+                          <div *ngIf="!(EffectiveTerm.valid || (EffectiveTerm.pristine && 
+                              !floorPlanSubmit))">
+                            <div [hidden]="EffectiveTerm.valid || (EffectiveTerm.pristine && 
+                                  !floorPlanSubmit)">
+                              <small class="text-danger">Term is required.</small>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-5 effectiveDateControl">
+                      <div class="form-group">
+                        <label for="selfId">Start Date</label>
+                        <p-calendar [(ngModel)]="commonVariable.rentEffectiveStartDate" readonlyInput="true" #StartDate="ngModel" required name="rentEffectiveStartDate"></p-calendar>
+                        <div *ngIf="!(StartDate.valid || (StartDate.pristine && 
+                           !floorPlanSubmit))">
+                          <div [hidden]="StartDate.valid || (StartDate.pristine && 
+                               !floorPlanSubmit)">
+                            <small class="text-danger">Start Date is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="selfId">End Date</label>
+                        <p-calendar [(ngModel)]="commonVariable.rentEffectiveEndDate" readonlyInput="true" #EndDate="ngModel" required name="rentEffectiveEndDate"></p-calendar>
+                        <div *ngIf="!(EndDate.valid || (EndDate.pristine && 
+                          !floorPlanSubmit))">
+                          <div [hidden]="EndDate.valid || (EndDate.pristine && 
+                              !floorPlanSubmit)">
+                            <small class="text-danger">End Date is required.</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-1 col-sm-1 addButtonBorder" style="    margin-top: 43px;cursor:pointer;" (click)="addDataIntoModel('rentPricing')">
+                      <i class="fa fa-plus" title="Add Data"></i>
+                    </div>
+                    <div class="col-sm-12 highLightHolderDiv" *ngIf="unitSavedModel?.rent_pricing_list?.length>0">
+                      <div class="col-sm-6 padding-0" [ngClass]="(index % 2 == 0) ? 'viewleftDotted' : ''" *ngFor="let rentPrice of unitSavedModel?.rent_pricing_list; let index=index">
+                        <li class="propertyList">
+                          <div class="col-sm-12 padding-0">
+                            <div class="col-sm-10 highLightHolderText">
+                              <span title={{rentPrice.effective_rent}}></span>{{rentPrice.effective_rent}}</div>
+                            <div class="col-sm-1  padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-pencil" style="cursor:pointer" title="Edit" (click)="editDetails(index,'rentPrice')"></i>
+                              </span>
+
+                            </div>
+                            <div class="col-sm-1 padding-0">
+                              <span class="removeClass">
+                                <i class="fa fa-remove" title="Remove" (click)="removeHighLights(index,'rentPrice')"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </li>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-sm-4 propertywidth">
+                  <div class="form-group">
+                    <label for="selfId">Features</label>
+                    <p-multiSelect [options]="unitfeatureIdList" [(ngModel)]="unitSavedModel.feature_ids_list" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                      filter="filter" placeholder="Select Apartment Type" name="Name" #NameValid="ngModel" required></p-multiSelect>
+                  </div>
+                  <div class="row padding-0">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Availability Vacante Date</label>
+                        <p-calendar [(ngModel)]="commonVariable.vacateDate" readonlyInput="true" name="vacate_date"></p-calendar>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="selfId">Made Ready Date</label>
+                        <p-calendar [(ngModel)]="commonVariable.madeReadyDate" readonlyInput="true" name="made_ready_date"></p-calendar>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Vacante Class</label>
+                    <input type="text" [(ngModel)]="unitSavedModel.availability_dict.vacancy_class" class="form-control" name="vacancy_class"
+                    />
+                  </div>
+                  <div class="col-sm-12 padding-0">
+                    <div class="col-sm-6  padding-0">
+                      <div class="form-group">
+                        <label for="selfId">Concession Value</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="unitSavedModel.concession_dict.value"
+                            class="form-control" name="concession_dictValue" />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="selfId">Concession Term</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" [(ngModel)]="unitSavedModel.concession_dict.term" class="form-control" name="concession_dictTerm" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6  padding-0">
+                      <div class="form-group">
+                        <label for="selfId">Concession Header</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" [(ngModel)]="unitSavedModel.concession_dict.description_header" class="form-control" name="concession_dictDescription_header"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="selfId">Concession Footer</label>
+                        <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                          <input type="text" [(ngModel)]="unitSavedModel.concession_dict.description_footer" class="form-control" name="concession_dictDescription_footer"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Concession Body</label>
+                    <div class="col-sm-12 col-sm-12" style=" padding: 0px 6px 10px 0px">
+                      <textarea class="form-control" [(ngModel)]="unitSavedModel.concession_dict.description_body" name="concession_dictDescription_body"
+                        required style="height: 92px !important"></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="selfId">Unit Plan Image</label>
+                    <p-fileUpload name="unitrPlanImage[]" customUpload="true" [showUploadButton]="false" (onSelect)="fileLoadIntoModel($event,'unitplan')"
+                      (onRemove)=Removeunit($event) multiple="multiple" accept="image/*" maxFileSize="1000000">
+                      <ng-template pTemplate="content">
+                        <ul *ngIf="unitUploadedFiles.length">
+                        </ul>
+                      </ng-template>
+                    </p-fileUpload>
+                  </div>
+                  <div class="col-sm-12" *ngIf="(addType == 'unit' && unit_id != '' && unitUploadedFilesdata?.length>0)">
+                    <div class="form-group">
+                      <label for="selfId"> Old Files</label>
+                    </div>
+                    <div class="col-sm-12 padding-0" style="max-height: 140px; overflow-y: scroll;">
+                      <div class="col-sm-12  padding-0 ui-fileupload-files" *ngFor="let savedImages of unitUploadedFilesdata;let index=index">
+                        <div class="col-sm-12 padding-0 ui-fileupload-row">
+                          <div class="col-sm-3 padding-0">
+                            <img [src]="savedImages?.file_url" width="50">
+                          </div>
+                          <div class="col-sm-7 padding_left_right">{{savedImages?.name}}</div>
+                          <div class="col-sm-2   ">
+                            <button icon="fa-close" pbutton="" (click)="removeUploadedImage(savedImages?.file_id,index,'unitplan')" type="button" ng-reflect-icon="fa-close"
+                              class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
+                              <span class="ui-button-icon-left ui-clickable fa fa-fw fa-close"></span>
+                              <span class="ui-button-text ui-clickable">ui-btn</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </p-accordionTab>
+
+          </p-accordion>
+
+        </div>
+      </div>
+
+      <div class="col-sm-12">
+        <div class="">
+          <div class="">
+            <div class="btn-toolbar-example " style=" margin-top:10px; margin-bottom: 30px;  text-align: right;">
+              <button type="submit" title="Save" (click)="(propertyAction=='add') ? addNewPropertyDetail() : updatePropertyDetail()" class="apartSuccessBtn"
+                value="Save" tabindex="9" style="width:87px;margin-right: 13px !important">{{(propertyAction=='add') ? 'Save' : 'Update' }}
+              </button>
+              <button class="apartCloseBtn" (click)="backButtonAction()" title="Back" data-dismiss="modal" type="button" tabindex="10"
+                style="width:87px">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer1">
+
+    <footercomponent></footercomponent>
+  </footer>
+</div>
+
+</html>

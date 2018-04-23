@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<div class="bodyContent">
+  <div class="page-control">
+
+    <headermenu></headermenu>
+    <!-- header section end here -->
+
+    <div class="content-div-bg">
+      <div class="container">
+        <!--container div start -->
+        <div class="list-allcontroll">
+          <!--list all controll div start -->
+          <div class="property-menu">
+            <div class="search-navbar">
+              <h3 class=property-title style="    margin-top: 0px;">Property Search Menu</h3>
+              <nav class="navbar navbar-expand-md">
+                <div class="" id="collapsibleNavbar2">
+                  <div class="col-sm-12 padding-0" style="margin: 6px 0px 7px 0px;">
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label class="blackcolor" for="selfId">Keyword</label>
+                        <input type="text" placeholder="Search by Keyword" [(ngModel)]="propertyListModel.search_text" [(ngModel)]="floorPlanModel.total_units"
+                          style="font-size: 13px !important;" class="form-control" name="rentName" />
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <label class="blackcolor" for="selfId">Management</label>
+                        <p-dropdown [options]="managementCompanyListDropdown" [(ngModel)]="propertyListModel.management_id" class="ddlWidth" [ngModelOptions]="{standalone: true}"
+                          filter="filter" placeholder="Select Management" name="Name"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label class="blackcolor" for="selfId">City</label>
+                        <p-dropdown [options]="citiesListDropdown" [(ngModel)]="propertyListModel.city" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                          filter="filter" placeholder="Select City" name="Name"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label class="blackcolor" for="selfId">BedRoom</label>
+                        <p-dropdown [options]="bedRoomDropdown" [(ngModel)]="propertyListModel.bedroom_from" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                          filter="filter" placeholder="Select BedRoom" name="Name"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <label class="blackcolor" for="selfId">Rent </label>
+                        <p-dropdown [options]="rentListDropdown" [(ngModel)]="propertyListModel.rent_from" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                          filter="filter" placeholder="Select Rent" name="rent"></p-dropdown>
+                      </div>
+                    </div>
+                    <div class="col-sm-1">
+                      <div class="form-group">
+                        <button type="button" class="apartSuccessBtn" (click)="getProperties()" style="margin-top: 25px;">Filter</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+          <div class="user-title">
+            <h2>PROPERTY LISTINGS</h2>
+            <span class="second-head">Found: {{count}} Apartments</span>
+            <span>
+              <i class="fa fa-plus addNewProperty" title="Add New Property" style="cursor:pointer" (click)="addNewProperty()"></i>
+            </span>
+          </div>
+          <div class="row">
+            <div class="col-sm-6" *ngFor="let propertyInfo of propertyListInformation; let i=index">
+              <div class="list-view propertyCard">
+                <div class="row">
+                  <div class="col-xs-6 col-sm-6">
+                      <div class="row" style="margin:0px">
+                          <div class="list-view-image">
+                              <img [src]="(propertyInfo?.property_files[0]?.file_url) != null ? propertyInfo?.property_files[0]?.file_url : 'assets/img/noImage.jpg'"
+                                class="img-responsive" />
+                            </div>
+                      </div>
+                      <div class="row" style="margin:0px">
+                          <button class="btn btn-primary " (click)="viewPropertyDetail(propertyInfo?.property_id)">View details</button>
+                  
+                      </div>
+                    
+                   </div>
+                  <div class="col-xs-6 col-sm-6" style="padding-left: 0px;">
+                    <div class="list-content">
+                      <div class="list-title">
+                        {{propertyInfo?.name}}
+                      </div>
+                      <div class="address">
+                        {{propertyInfo?.address_dict?.address}}
+                      </div>
+                      <div class="property-info hidden-xs">
+                        {{propertyInfo?.description}}
+                      </div>
+                      <table [ngClass]="propertyInfo?.description == '' ? 'alignTable' : '' " class="table">
+                        <tbody *ngFor="let Unit of unitList[i].unitName;  let unitindex=index">
+                          <tr>
+                            <td>{{Unit?.name}}</td>
+                            <td>$ {{unitList[i]?.priceList[unitindex]?.value}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--list all controll div end -->
+      </div>
+      <!-- container end -->
+    </div>
+    <!-- content div end here -->
+
+  </div>
+  <!-- overall page control end -->
+
+  <footer>
+
+
+    <footercomponent></footercomponent>
+  </footer>
+
+
+</div>
+
+</html>

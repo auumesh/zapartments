@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<div class="bodyContent">
+    <div class="sign-up-main-control">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">
+                        <img src="assets/img/logo.png" alt="zapartments">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+
+                </div>
+            </div>
+        </nav>
+        <!-- header section end here -->
+        <div class="content-div">
+            <ng2-toasty [position]="'top-center'"></ng2-toasty>
+            <form id="login-1" class="msform">
+                <div class="appent">
+                    <fieldset id="preferences1">
+                        <div class="title-head">
+                            <h2 class="fs-title"> Welcome back!</h2>
+                        </div>
+                        <div class="login" *ngIf="!showCreate">
+                            <h5>
+                                Log in with
+                            </h5>
+                            <div class="row row-social">
+                                <div class="col-sm-6 col-social-btn text-right">
+                                    <button type="button" class="btn btn-lg btn-gplus">
+                                        <i class="fa fa-google-plus pr-1"></i> Google +</button>
+                                </div>
+                                <div class="col-sm-6 col-social-btn text-left">
+                                    <button type="button" class="btn btn-lg btn-fb">
+                                        <i class="fa fa-facebook pr-1"></i> Facebook</button>
+                                </div>
+                            </div>
+                            <h5>
+                                - or -
+                            </h5>
+                            <div class="login-form">
+                                <input type="email" name="" [(ngModel)]="userName" placeholder="test@gmail.com" name="username" id="userName" />
+                                <input type="password" name="" [(ngModel)]="password" placeholder="Password" name="Password" id="password" />
+                            </div>
+                            <div class="creat-password">
+                                <a class="forgotpwd" (click)="createPassword()" style="color: #AF2048 !important;font-size: 16px;cursor: pointer; ">Create a new password</a>
+                            </div>
+                            <button class="btn btn-theam" (click)="LoginButtonClick()">Login</button>
+                            <div id="quiz-login" style="display: block;margin-top: 10px;">
+                                Don't have an account?
+                                <a href="#/pages/signup">Sign up</a>
+                            </div>
+                        </div>
+                        <!-- forgot password -->
+                        <div class="resetpwd login" *ngIf="showCreate">
+                            <h5>
+                                Reset Password
+                            </h5>
+                            <br />
+                            <div class="login-form">
+                                <input type="email" name="" placeholder="test@gmail.com" />
+                            </div>
+                            <div class="creat-password">
+                                <a class="back" (click)="backClicked()" style="color: #AF2048 !important;font-size: 16px;cursor: pointer; ">Back</a>
+                            </div>
+
+
+                            <button class="btn btn-theam">Reset Password</button>
+                        </div>
+                        <!-- forgot password -->
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <footercomponent></footercomponent>
+
+    </footer>
+
+</div>
+
+</html>

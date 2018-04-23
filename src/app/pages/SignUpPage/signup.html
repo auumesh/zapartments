@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+
+<html>
+<div class="bodyContent">
+    <div class="sign-up-main-control">
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="">
+                        <img src="assets/img/logo.png" alt="zapartments">
+                    </a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+
+                </div>
+            </div>
+        </nav>
+        <!-- header section end here -->
+
+        <div class="content-div">
+            <form id="msform" class="msform">
+
+
+                <fieldset *ngIf="showTermplate==1">
+                    <!-- first five box modal start -->
+
+                    <div class="title-head">
+                        <h2 class="fs-title">Create your account
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle">{{lastAnswerModel?.question_text}}</h3>
+                    <div class="modal-signup row">
+                        <div class="col-xs-6 col-sm-3 col-md-3">
+                            <div class="selection-box selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',0)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">S</div>
+                                <div class="selection-box-label">Studio</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-sm-3">
+                            <div class="selection-box selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',0)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">1</div>
+                                <div class="selection-box-label">bed</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-sm-3">
+                            <div class="selection-box selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',0)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">2</div>
+                                <div class="selection-box-label">beds</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3 col-sm-3">
+                            <div class="selection-box selection-box_4 {{checkifActive(4)?'active':''}}" (click)="selectiondata(4,'selection-box',0)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">3+</div>
+                                <div class="selection-box-label">beds</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button name="next" class="next action-button buttonload" [disabled]="nextDesabled" (click)="nextStep(2);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 20px;" *ngIf="isLoading"></i>
+                        <span *ngIf="!isLoading"> Next</span>
+                    </button>
+                    <div id="quiz-login" style="display: block;">
+                        Been here before?
+                        <a href="#/pages/login">Log In</a>
+
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==2">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!-- second prize box  start -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+                    <div class="modal-signup">
+                        up to ${{lastAnswerModel.response}} a month
+                        <p-slider [(ngModel)]="lastAnswerModel.response" [max]='10000' (onChange)="valuechange(lastAnswerModel.response)" name="slider"
+                            id="slider"></p-slider>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(1);" value="Previous" />
+
+                    <button name="next" class="next action-button buttonload" [disabled]="nextDesabled" (click)="nextStep(3);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 20px;" *ngIf="isLoading"></i>
+                        <span *ngIf="!isLoading"> Next</span>
+                    </button>
+                </fieldset>
+
+                <fieldset *ngIf="showTermplate==3">
+                    <!-- third location box  start -->
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="google-map">
+
+                        <agm-map [latitude]="latitude" [zoom]=17 [mapTypeId]="'roadmap'" [longitude]="longitude" (mapReady)="mapReady($event)" (mapClick)="updateDiv($event)">
+                            <agm-marker [latitude]="latitude" [label]="street" [markerDraggable]="true" (dragEnd)="markerDragEnd( $event)" [longitude]="longitude"></agm-marker>
+
+
+                        </agm-map>
+                    </div>
+                    <div class="location-box" style="margin-top: 25px;">
+                        <input class="locaation form-control" id="locaation" name="locaation" [(ngModel)]="lastAnswerModel.response" (ngModelChange)="valuechange($event)"
+                            placeholder="Location" type="text" />
+                    </div>
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(2);" value="Previous" />
+
+
+                    <button name="next" class="next action-button buttonload" [disabled]="nextDesabled" (click)="nextStep(4);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 20px;" *ngIf="isLoading"></i>
+                        <span *ngIf="!isLoading"> Next</span>
+                    </button>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==4">
+                    <!--  nine pets box start -->
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+                    <div class="modal-signup row">
+                        <div class="col-xs-12 col-sm-4 col-md-4">
+                            <div class="selection-box selection-box_1 {{checkifActive(1)?'active':''}}" data-size="0" (click)="selectiondata(1,'selection-box',1)"
+                                style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <img src="assets/img/dog.png" alt="" class="img-responsive custom-icons">
+                                </div>
+                                <div class="selection-box-label">Dogs</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_2 {{checkifActive(2)?'active':''}}" data-size="0" (click)="selectiondata(2,'selection-box',1)"
+                                style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <img src="assets/img/cat.png" alt="" class="img-responsive custom-icons">
+                                </div>
+                                <div class="selection-box-label">Cats</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">O</div>
+                                <div class="selection-box-label">Others</div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(3);" value="Previous" />
+
+                    <button name="next" class="next action-button buttonload" [disabled]="nextDesabled" (click)="nextStep(5);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 20px;" *ngIf="isLoading"></i>
+                        <span *ngIf="!isLoading"> Next</span>
+                    </button>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==5">
+                    <!--  10 care most box start -->
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="modal-signup">
+                        <div class="single-box">
+
+                            <div class="selection-box-city selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                </span> Having the cheapest price
+                            </div>
+
+
+
+                            <div class="selection-box-city selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                </span> Staying in the location I want
+                            </div>
+                            <div class="selection-box-city selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </span> Getting all my features
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(4);" value="Previous" />
+
+                    <button name="next" class="next action-button buttonload" [disabled]="nextDesabled" (click)="nextStep(6);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 20px;" *ngIf="isLoading"></i>
+                        <span *ngIf="!isLoading"> Next</span>
+                    </button>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==6">
+                    <!--  11 calender box start -->
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="modal-signup">
+
+                        <div class="form-group">
+
+                            <p-calendar [(ngModel)]="date3" [inline]="true" (onSelect)="valuechange(date3)" [ngModelOptions]="{standalone: true}"></p-calendar>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(5);" value="Previous" />
+
+                    <button name="next" class="next action-button buttonload" [disabled]="nextDesabled" (click)="nextStep(7);">
+                        <i class="fa fa-spinner fa-spin" style="font-size: 20px;" *ngIf="isLoading"></i>
+                        <span *ngIf="!isLoading"> Next</span>
+                    </button>
+
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==7">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+
+                    <div class="modal-signup">
+                        <div class="single-box">
+                            <div class="selection-box-city selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                </span> Just Looking
+                            </div>
+                            <div class="selection-box-city selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                </span> Move But No Hurry
+                            </div>
+                            <div class="selection-box-city selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                </span> Bit Flexible
+                            </div>
+                            <div class="selection-box-city selection-box_4 {{checkifActive(4)?'active':''}}" (click)="selectiondata(4,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                </span> Urgent
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(6);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(8);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+
+                <fieldset *ngIf="showTermplate==8">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+
+                    <div class="modal-signup">
+                        <div class="number-box">
+                            <div class="form-group">
+
+                                <!-- (keypress)="_keyPress($event,lastAnswerModel.response,24)" -->
+                                <input type="number" [(ngModel)]="lastAnswerModel.response" (keypress)="_keyPress($event,lastAnswerModel.response,24)" id="Months"
+                                    name="Months">
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(7);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(9);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==9">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+                    <div class="modal-signup row">
+                        <div class="location-box">
+                            <input class="locaation form-control" [(ngModel)]="lastAnswerModel.response" id="Dollars" name="Dollars" placeholder="(E.g:3000)"
+                                type="text" />
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(8);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(10);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==10">
+                    <!--  seven parking box start -->
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <!--  -->
+                    <div class="modal-signup row">
+                        <div class="location-box">
+                            <input class="locaation form-control" OnlyNumber="true" DecimalPlaces="2" minValue="1.00" maxValue="999999999.00" [(ngModel)]="lastAnswerModel.response"
+                                id="Dollars" name="Dollars" placeholder="(E.g:3000)" type="number" />
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(9);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(11);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==11">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!--  eight other box start -->
+                    <div class="title-head">
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+                            <!-- <span>
+                            <i class="fa fa-info-circle " style="float: right;" title="{{lastAnswerModel?.help}}"></i>
+                        </span> -->
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="modal-signup">
+                        <div class="single-box">
+                            <div class="selection-box-city selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',1)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                </span> On-site laundry
+                            </div>
+                            <div class="selection-box-city selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',1)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                </span> In-unit laundry
+                            </div>
+                            <div class="selection-box-city selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',1  )">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                </span> Washer/dryer connections
+                            </div>
+                        </div>
+                    </div>
+                    <!-- -->
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(10);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(12);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==12">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!-- nearby city google map box  start -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+                    <div class="modal-signup row">
+                        <div class="parking-box">
+                            <div class="col-xs-6">
+                                <div class="selection-box selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',0)"
+                                    data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                    <div class="selection-box-icon">
+                                        <i class="fa fa-home" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="selection-box-label">Garage</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="selection-box selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',0)"
+                                    data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                    <div class="selection-box-icon">
+                                        <i class="fa fa-car" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="selection-box-label">Parking</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(11);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(13);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==13">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!-- five location city box  start -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="modal-signup row">
+                        <div class="col-xs-6 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <i class="fa fa-building" aria-hidden="true"></i>
+                                </div>
+                                <div class="selection-box-label">Hardwood Floors</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <i class="fa fa-trophy" aria-hidden="true"></i>
+                                </div>
+                                <div class="selection-box-label">Dishwasher</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <i class="fa fa-braille" aria-hidden="true"></i>
+                                </div>
+                                <div class="selection-box-label">Air Conditioning</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_4 {{checkifActive(4)?'active':''}}" (click)="selectiondata(4,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <i class="fa fa-building-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="selection-box-label">Patio/Balcony</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_5 {{checkifActive(5)?'active':''}}" (click)="selectiondata(5,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <i class="fa fa-genderless" aria-hidden="true"></i>
+                                </div>
+                                <div class="selection-box-label">Pool</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-4 col-sm-4">
+                            <div class="selection-box selection-box_6 {{checkifActive(6)?'active':''}}" (click)="selectiondata(6,'selection-box',1)"
+                                data-size="0" style="transform: scaleX(1) scaleY(1);">
+                                <div class="selection-box-icon">
+                                    <i class="fa fa-universal-access" aria-hidden="true"></i>
+                                </div>
+                                <div class="selection-box-label">GYM</div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(12);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(14)" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==14">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!--  14 signing box start -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="google-map">
+                        <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="10" [disableDefaultUI]="false">
+                            <agm-marker *ngFor="let m of marker; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="m.icon"
+                                class="mapbackground" (markerClick)="clickedMarker($event,m, i)" [markerDraggable]="m.draggable">
+
+                            </agm-marker>
+
+
+                        </agm-map>
+
+
+                    </div>
+                    <h3 class="fs-subtitle"> {{selectedCities}} City Selected.</h3>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(13);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(15);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==15">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!--  15 signing box start -->
+                    <div class="title-head">
+
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+
+                    <agm-map [latitude]="latitude" [zoom]=17 [mapTypeId]="'roadmap'" [longitude]="longitude" (mapReady)="mapReady($event)" (mapClick)="updateDiv($event)">
+                        <agm-marker [latitude]="latitude" [label]="street" [markerDraggable]="true" (dragEnd)="markerDragEnd( $event)" [longitude]="longitude">
+                            <agm-info-window>
+                                <strong>{{Address}}</strong>
+                            </agm-info-window>
+                        </agm-marker>
+                    </agm-map>
+
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label for="selfId">Commute Method</label>
+                        <p-dropdown [options]="CommuteMethodList" [(ngModel)]="CommuteMethod" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                            filter="filter" placeholder="Select Commute Method" name="fee_dictlate_type"></p-dropdown>
+                    </div>
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(14);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(16)" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <!-- <fieldset *ngIf="showTermplate==16">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+             
+                    <div class="title-head">
+
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="modal-signup">
+                        <div class="single-box">
+                            <div class="selection-box-city selection-box_1" (click)="selectiondata(1,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                </span> A cosigner
+                            </div>
+                            <div class="selection-box-city selection-box_2" (click)="selectiondata(2,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                </span> Roommates, partner, etc.
+                            </div>
+                            <div class="selection-box-city selection-box_3" (click)="selectiondata(3,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span> Me, myself, and I
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(15);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(17)" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset> -->
+
+                <fieldset *ngIf="showTermplate==16">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!--  15 signing box start -->
+                    <div class="title-head">
+
+                        <h2 class="fs-title">{{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+            
+                    <div class="google-map">
+
+                        <agm-map [latitude]="latitude" [zoom]=15 [mapTypeId]="'roadmap'" [longitude]="longitude" (mapReady)="mapReady($event)" (mapClick)="updateDiv($event)">
+                            <agm-marker [latitude]="latitude" [label]="street" [markerDraggable]="true" (dragEnd)="markerDragEnd( $event)" [longitude]="longitude"></agm-marker>
+                            <agm-circle [latitude]="latitude" [longitude]="longitude" [radius]="lastAnswerModel.response*5" [fillColor]="'rgb(0, 173, 242)'">
+                            </agm-circle>
+                        </agm-map>
+                    </div>
+                    <div class="modal-signup">
+                        {{lastAnswerModel.response}} mins
+                        <p-slider [(ngModel)]="lastAnswerModel.response" [max]='60' name="slider" id="slider"></p-slider>
+                    </div>
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(15);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(17)" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <fieldset *ngIf="showTermplate==17">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!--  17 evicted box start -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <!-- <div class="modal-signup">
+                        <div class="single-box">
+                            <div class="selection-box-city selection-box_1" (click)="selectiondata(1,'selection-box',0)">
+                                <span class="selection-box-icon">No</span> I've never been evicted
+                            </div>
+                            <div class="selection-box-city selection-box_2" (click)="selectiondata(2,'selection-box',0)">
+                                <span class="selection-box-icon">Yes</span> I've been evicted
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="modal-signup">
+                        <div class="single-box">
+                            <div class="selection-box-city selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                </span>  Roommates, partner, etc.
+                            </div>
+                            <div class="selection-box-city selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                </span> A cosigner
+                            </div>
+                            <div class="selection-box-city selection-box_3 {{checkifActive(3)?'active':''}}" (click)="selectiondata(3,'selection-box',0)">
+                                <span class="selection-box-icon">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                </span> Me, myself, and I
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(16);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(18);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+                <fieldset *ngIf="showTermplate==18">
+                    <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div>
+                    <!--  17 evicted box start -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+                        </h2>
+                    </div>
+                    <h3 class="fs-subtitle"> {{lastAnswerModel?.secondary_text}}</h3>
+                    <div class="modal-signup">
+                        <div class="single-box">
+                            <div class="selection-box-city selection-box_1 {{checkifActive(1)?'active':''}}" (click)="selectiondata(1,'selection-box',0)">
+                                <span class="selection-box-icon">No</span> I've never been evicted
+                            </div>
+                            <div class="selection-box-city selection-box_2 {{checkifActive(2)?'active':''}}" (click)="selectiondata(2,'selection-box',0)">
+                                <span class="selection-box-icon">Yes</span> I've been evicted
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(17);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="nextStep(19);" value="Next" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+                <fieldset *ngIf="showTermplate==19">
+                    <!-- <div class="progress" style="margin-bottom: 0px;">
+                        <div class="progress-bar" [style.width.%]="prograss">
+                            {{lastAnswerModel?.progress_pcnt}} %
+                        </div>
+                    </div> -->
+                    <div class="title-head">
+                        <h2 class="fs-title"> {{lastAnswerModel?.question_text}}
+
+                        </h2>
+                    </div>
+                    <div class="modal-signup">
+                        <div class="star-rating">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                        </div>
+                        <h4>
+                            We&#8217; re rated 4 out of 5 because renters have so much success finding places they love.
+                        </h4>
+                        <input type="text" name="fname" placeholder="First Name" [(ngModel)]="preferencesmodel.first_name" />
+                        <input type="text" name="lname" placeholder="Last Name" [(ngModel)]="preferencesmodel.last_name" />
+                        <!-- <input type="email" name="email" placeholder="Email" [(ngModel)]="preferencesmodel.email" />
+                        <input type="text" name="phone" placeholder="Phone" [(ngModel)]="preferencesmodel.phone" /> -->
+                        <input type="email" name="email" placeholder="Email" [(ngModel)]="preferencesmodel.email" />
+                    
+                        <p-inputMask mask="999-999-9999" [(ngModel)]="preferencesmodel.phone" styleClass="widthpercent" placeholder="999-999-9999"
+                            name="phone" id="phone"></p-inputMask>
+                        <h6>You agree to ZApartment's
+                            <a href="">Terms of Use </a>&
+                            <a href="">Privacy Policy</a> and to be contacted by us or third parties. </h6>
+                    </div>
+
+                    <input type="button" name="previous" class="previous action-button" (click)="clickPreviousButton(18);" value="Previous" />
+                    <input type="button" name="next" class="next action-button" (click)="savepreferences();" value="Submit" />
+                    <div id="quiz-login" style="display: block;" *ngIf="allow_signup" (click)="nextStep(19)">
+                        Save your preferences ?
+                        <a href="javascript:void(0);">Sign Up </a>
+                    </div>
+                </fieldset>
+
+
+                <!-- save preference -->
+                <fieldset class="save_pref" *ngIf="showTermplate==-1">
+
+                    <div>
+                        <div class="title-head">
+                            <h2 class="fs-title"> Save your preferences</h2>
+                        </div>
+                        <div class="modal-signup">
+                            <input type="text" name="fname" placeholder="First Name" [(ngModel)]="preferencesmodel.first_name" />
+                            <input type="text" name="lname" placeholder="Last Name" [(ngModel)]="preferencesmodel.last_name" />
+                            <input type="email" name="email" placeholder="Email" [(ngModel)]="preferencesmodel.email" />
+                        
+                            <p-inputMask mask="999-999-9999" [(ngModel)]="preferencesmodel.phone" styleClass="widthpercent" placeholder="999-999-9999"
+                                name="phone" id="phone"></p-inputMask>
+                            <!-- <input type="text" name="phone" placeholder="Phone" 
+                            [(ngModel)]="preferencesmodel.phone" /> -->
+
+                            <h6>You agree to ZApartment's
+                                <a href="">Terms of Use </a>&
+                                <a href="">Privacy Policy</a> and to be contacted by us or third parties. </h6>
+                        </div>
+                        <button class="btn btn-theam" (click)="savepreferences()">SAVE & CONTINUE</button>
+
+
+
+                    </div>
+                </fieldset>
+
+
+            </form>
+        </div>
+    </div>
+
+
+    <footer>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="design">
+                            <a href="#">Advertisers </a> |
+                            <a href="#">Contact US </a> |
+                            <a href="#">Terms Of Use </a> |
+                            <a href="#">Privacy Policy </a>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <div class="copyright text-right">
+                            &copy; 2018, Zapartments, All rights reserved
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+</html>

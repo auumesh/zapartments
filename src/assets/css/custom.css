@@ -1,0 +1,235 @@
+/**** BASE ****/
+agm-map {
+    height: 300px;
+  }
+a {
+    color: #03a1d1;
+    text-decoration: none!important;
+}
+
+/**** LAYOUT ****/
+.list-inline>li {
+    padding: 0 10px 0 0;
+}
+.container-pad {
+    padding: 30px 5px;
+}
+
+
+/**** MODULE ****/
+.bgc-fff {
+    background-color: #fff!important;
+}
+.box-shad {
+    -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.2);
+    box-shadow: 1px 1px 0 rgba(0,0,0,.2);
+    
+}
+.brdr {
+    border: 1px solid #ededed;
+}
+
+/* Font changes */
+.fnt-smaller {
+    font-size: .9em;
+}
+.fnt-lighter {
+    color: #bbb;
+}
+
+/* Padding - Margins */
+.pad-10 {
+    padding: 10px!important;
+}
+.mrg-0 {
+    margin: 0!important;
+}
+.btm-mrg-10 {
+    margin-bottom: 10px!important;
+}
+.btm-mrg-20 {
+    margin-bottom: 20px!important;
+}
+
+/* Color  */
+.clr-535353 {
+    color: #535353;
+}
+
+
+
+
+/**** MEDIA QUERIES ****/
+@media only screen and (max-width: 991px) {
+    #property-listings .property-listing {
+        padding: 5px!important;
+    }
+    #property-listings .property-listing a {
+        margin: 0;
+    }
+    #property-listings .property-listing .media-body {
+        padding: 10px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #property-listings .property-listing img {
+        max-width: 180px;
+    }
+}
+
+
+
+
+
+
+
+.ui-panel {
+  position: fixed;
+  left: -200px;
+  top: 10%;
+  width: 200px;
+  min-height: 400px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  z-index: 1000;
+}
+
+.ui-panel.opened {
+  left: 0;
+}
+
+.ui-panel .control-label {
+  color: #fff;
+  font-size: 15px;
+  display: block;
+}
+
+.ui-panel .checkbox {
+  display: inline-block;
+  color: #fff;
+  margin-right: 10px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.ui-panel .form-control {
+  padding: 3px 5px;
+  height: 28px;
+  width: 170px;
+}
+
+.ui-panel .form-group {
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.ui-panel__toggle {
+  background: rgba(0, 0, 0, 0.8);
+  outline: none;
+  border: none;
+  padding: 5px 7px;
+  line-height: 1;
+  position: absolute;
+  right: 0px;
+  top: 0;
+  width: 25px;
+  height: 25px;
+  color: #fff;
+}
+
+.ui-panel__toggle:after {
+  font-size: 1em;
+  display: inline-block;
+  font-family: FontAwesome;
+  content: "";
+}
+
+.ui-panel__btn {
+  background: rgba(0, 0, 0, 0.8);
+  outline: none;
+  border: none;
+  padding: 5px 7px;
+  line-height: 1;
+  position: absolute;
+  right: 0px;
+  width: 25px;
+  height: 25px;
+  color: #fff;
+}
+
+.ui-panel__btn--up {
+  top: 25px;
+}
+
+.ui-panel__btn--up:after {
+  font-size: 1em;
+  display: inline-block;
+  font-family: FontAwesome;
+  content: "";
+}
+
+.ui-panel__btn--down {
+  top: 50px;
+}
+
+.ui-panel__btn--down:after {
+  font-size: 1em;
+  display: inline-block;
+  font-family: FontAwesome;
+  content: "";
+}
+
+.ui-panel__btn--next {
+  top: 75px;
+}
+
+.ui-panel__btn--next:after {
+  font-size: 1em;
+  display: inline-block;
+  font-family: FontAwesome;
+  content: "";
+}
+
+
+
+/*==================================================
+ * Effect 5
+ * ===============================================*/
+.effect5
+{
+  position: relative;
+}
+.effect5:before, .effect5:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 35px 20px #777;
+  -moz-box-shadow: 0 35px 20px #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+.effect5:after
+{
+  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+}
+
+
+

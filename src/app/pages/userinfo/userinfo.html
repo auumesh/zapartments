@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<div class="bodyContent">
+  <div class="page-control">
+    <!-- overall page control start -->
+    <nav class="navbar navbar-expand-md">
+      <a class="navbar-brand" href="javascript:void(0);">
+        <img src="assets/img/logo.png" class="img-responsive">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav custom-right ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="signup.html">Sing-Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link enroll" href="signup.html">Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- header section end here -->
+    <div class="content-div">
+      <!--container div start -->
+      <div class="container">
+        <!--contend div start -->
+        <div class="form-section">
+          <div class="user-title text-center">
+            <h2>User Name Rental Profile</h2>
+          </div>
+
+          <div class="edit-forms">
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="usr">Full Name</label>
+                    <input type="text" class="form-control" id="username" [(ngModel)]="user_info.name" name="username" placeholder="Full Name">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="usr">Phone Number</label>
+                    <input type="text" class="form-control" [(ngModel)]="user_info.phone" id="number" name="PhoneNumber" placeholder="Phone Number">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="EmailID">Email Updates</label>
+                    <p-dropdown [options]="getMailUpdateList" [(ngModel)]="userInfoModel.EmailID" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                      filter="filter" [style]="{'width':'90% '}" placeholder="Select Email Updates" name="EmailID" #EmailID="ngModel"></p-dropdown>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="MonthlyHousehold">Monthly Household Income</label>
+                    <input type="text" class="form-control" id="HouseholdIncome" name="HouseholdIncome" [(ngModel)]="user_info.monthly_income"
+                      placeholder="Monthly Household Income">
+                  </div>
+                </div>
+                <div class="col-md-4 usercal">
+                  <div class="form-group ">
+                    <label>Move In Date</label>
+                    <p-calendar [(ngModel)]="user_info.movein_date" dateFormat="dd-MM-yy" [ngModelOptions]="{standalone: true}" inputStyleClass="customFormControl"
+                      [style]="{'width':'102% '}" [showIcon]="true" #Sentupdate="ngModel" name="Sentupdate"></p-calendar>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="Evictions">Evictions</label>
+                    <p-dropdown name="Evictions" [options]="getEvictionList" [(ngModel)]="userInfoModel.Evictions" class="ruleDropDownDesign"
+                      [ngModelOptions]="{standalone: true}" filter="filter" [style]="{'width':'90% '}" placeholder="Select Evictions"
+                      #Evictions="ngModel"></p-dropdown>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="email-form">
+              <label>Email</label>
+              <div class="row">
+                <div class="col-sm-6">
+                  {{user_info?.email}}
+                </div>
+                <div class="col-sm-3">
+                  <a href="login.html">Change</a>
+                </div>
+                <div class="col-sm-3">
+                  <a href="javascript: void(0);">Set Password</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="user-form-title text-center">
+              <h3>Apartment Preferences</h3>
+            </div>
+            <div class="preferences-forms">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="usr">Location</label>
+                    <input type="text" class="form-control" id="location" placeholder="Location" 
+                    [(ngModel)]="user_info.formatted_address"
+                    data-toggle="modal" data-target="#myModal" readonly>
+                  </div>
+                  <!-- location modal start -->
+                  <!-- The Modal -->
+                  <div class="modal fade" id="myModal">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h3 class="modal-title">What cities do you want to live in?</h3>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body edit-map">
+                          <div class="location-select-map" >
+                            <div class="google-map" *ngIf=showmap>
+
+                              <agm-map [latitude]="latitude" [zoom]=17 [mapTypeId]="'roadmap'" 
+                              [longitude]="longitude" 
+                               (mapClick)="updateDiv($event,'move')">
+                                  <agm-marker [latitude]="user_info.move_location_dict.latitude" [label]="user_info.move_location_dict. street" 
+                                  [markerDraggable]="true" [longitude]="user_info.move_location_dict.longitude"></agm-marker>
+      
+      
+                              </agm-map>
+                          </div>
+                            <h4 class="selected-city text-center">{{user_info?.move_location_dict?.formatted_address}}</h4>
+                            <div class="save-cancel" style="height: 60px;">
+                              <div class="buttons-submit text-center">
+                                <button type="button" class="btn btn-outline-secondary " data-dismiss="modal">Cancel</button>
+                               
+                              </div>
+                            </div> 
+
+                          </div>
+                          
+                        </div>
+                        <!-- edit map end -->
+                      </div>
+                    </div>
+                  </div>
+                  <!-- location modal end -->
+
+                  <div class="modal fade" id="CommuteModal">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h3 class="modal-title">WHERE DO YOU WORK OR GO TO SCHOOL??</h3>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body edit-map">
+                          <div class="location-select-map" >
+                            <div class="google-map" *ngIf=showmap>
+
+                              <agm-map [latitude]="user_info.commute_location_dict.latitude"
+                               [zoom]=17 [mapTypeId]="'roadmap'"
+                               [longitude]="user_info.commute_location_dict.longitude" 
+                                (mapClick)="updateDiv($event,'commute')">
+                                <agm-marker [latitude]="user_info.commute_location_dict.latitude" [label]="user_info.commute_location_dict.street"
+                                 [longitude]="user_info.commute_location_dict.longitude">
+                                    <agm-info-window>
+                                        <strong>{{user_info?.commute_location_dict?. street}}</strong>
+                                    </agm-info-window>
+                                </agm-marker>
+                            </agm-map>
+      
+                           
+                          </div>
+                            <!-- <h4 class="selected-city text-center">{{user_info?.formatted_address}}</h4> -->
+                            <div class="save-cancel" style="height: 60px;">
+                              <div class="buttons-submit text-center">
+                                <button type="button" class="btn btn-outline-secondary " data-dismiss="modal">Cancel</button>
+                                <!-- <button type="button" class="btn btn-primary">Save</button> -->
+                                <!-- <span class="or">- or -</span>
+                                <a href="javascript:void(0);" class="change_city text-uppercase">Change my city</a> -->
+                              </div>
+                            </div> 
+
+                          </div>
+                          <!-- <div class="location-type-form">
+                            <div class="form-edit">
+                              <div class="form-group">
+                                <input type="text" class="form-control"  placeholder="Ender Your Location" />
+                              </div>
+                            </div>
+                            <div class="save-cancel">
+                              <div class="buttons-submit text-center">
+                                <button type="button" class="btn btn-outline-secondary return-tab">Cancel</button>
+                                <button type="button" class="btn btn-primary">Save</button>
+                              </div>
+                            </div>
+                          </div> -->
+                        </div>
+                        <!-- edit map end -->
+                      </div>
+                    </div>
+                  </div>
+
+
+<!-- 
+                  <div class="google-map">
+                    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="10" [disableDefaultUI]="false">
+                        <agm-marker *ngFor="let m of marker; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.label" [iconUrl]="m.icon"
+                            class="mapbackground" (markerClick)="clickedMarker($event,m, i)" [markerDraggable]="m.draggable">
+
+                        </agm-marker>
+
+
+                    </agm-map>
+
+
+                </div>
+                <h3 class="fs-subtitle"> {{selectedCities}} City Selected.</h3> -->
+
+                  <div class="form-group">
+                    <label for="pwd">Beds</label>
+                    <div class="btn-group btn-group-justified" id="beds">
+                      <div class="btn btn-default  btn_click {{user_info.bedrooms==1?'active':''}}" (click)="changepreference(1,'bed')">
+                        <span class="btn-text">Studio</span>
+                      </div>
+                      <div class="btn btn-default btn_click {{user_info.bedrooms==2?'active':''}}" (click)="changepreference(2,'bed')">
+                        <span class="btn-text">1 Bed</span>
+                      </div>
+                      <div class="btn btn-default btn_click {{user_info.bedrooms==3?'active':''}}" (click)="changepreference(3,'bed')">
+                        <span class="btn-text">2 Bed</span>
+                      </div>
+                      <div class="btn btn-default btn_click {{user_info.bedrooms==4?'active':''}}" (click)="changepreference(4,'bed')">
+                        <span class="btn-text">3 +</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="pwd">{{bathsModel.BathTitle}}</label>
+                    <div class="btn-group btn-group-justified" id="beds">
+                      <div class="btn btn-default btn_click" data-value="0" href="#">
+                        <span class="btn-text">{{bathsModel.coulumnOne}}</span>
+                      </div>
+                      <div class="btn btn-default btn_click" data-value="1" href="#">
+                        <span class="btn-text">{{bathsModel.secondColumn}}</span>
+                      </div>
+                      <div class="btn btn-default btn_click" data-value="2" href="#">
+                        <span class="btn-text">{{bathsModel.ThirdCoiumn}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="lease">Who else will be signing the lease</label>
+                    <p-dropdown name="lease" [options]="signingthelease" [(ngModel)]="user_info.cosigner" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                      filter="filter" placeholder="Select cosigner" #cosigner="ngModel"></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+
+                  <div class="form-group">
+                    <label for="pwd">Price Range</label>
+                    <div class="price-slider" style="text-align: center;">
+
+
+                      <p>${{user_info.monthly_income}} a month</p>
+                      <!-- <span class="text-center">${{user_info.monthly_income}} a month</span> -->
+
+                      <div class="col-sm-12">
+                        <p-slider [(ngModel)]="user_info.monthly_income" [max]='10000' name="slider" id="slider"></p-slider>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="pwd">Pets</label>
+                    <div class="btn-group btn-group-justified" id="beds">
+                      <div class="btn btn-default btn_click {{pet_selection.Cats?'active':''}}" (click)="changepreference('Cats','pets')">
+                        <span class="btn-text">Cats</span>
+                      </div>
+                      <div class="btn btn_click btn-default {{pet_selection.Dogs?'active':''}}" (click)="changepreference('Dogs','pets')">
+                        <span class="btn-text">Dogs</span>
+                      </div>
+                      <div class="btn btn_click btn-default {{pet_selection.Others?'active':''}}" (click)="changepreference('Others','pets')">
+                        <span class="btn-text">Others</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="Laundry">Laundry</label>
+                    <p-multiSelect [options]="getLaundryList" [(ngModel)]="user_info.main_amenities" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                      filter="filter" placeholder="Select Laundry" name="Laundry" #Laundry="ngModel"></p-multiSelect>
+                  </div>
+                  <div class="form-group">
+                    <label for="Amenities">Amenities</label>
+                    <p-multiSelect [options]="getAmenitiesList" [(ngModel)]="user_info.other_features" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                      filter="filter" placeholder="Select Amenities" name="Amenities" #Amenities="ngModel"></p-multiSelect>
+                  </div>
+                  <div class="form-group">
+                    <label for="usr">Lease Length</label>
+                    <input type="text" class="form-control" id="length" name="length" [(ngModel)]="user_info.lease_length" placeholder="select lease length">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="user-form-title text-center">
+              <h3>Commute Information</h3>
+            </div>
+
+            <div class="commute-forms">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="usr">Commute Location (work, school, etc.)</label>
+                    <input type="text" class="form-control"
+                     [(ngModel)]="user_info.formatted_address" id="enter-location"
+                      placeholder="Commute Location"                    
+                      data-toggle="modal" data-target="#CommuteModal" readonly
+                      >
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="CommuteMethod">Commute Method</label>
+                    <p-dropdown [options]="getCommuteMethodList" [(ngModel)]="userInfoModel.CommuteMethod" class="ruleDropDownDesign" [ngModelOptions]="{standalone: true}"
+                      filter="filter" [style]="{'width':'90% '}" placeholder="Select Commute Method" name="CommuteMethod" #CommuteMethod="ngModel"></p-dropdown>
+                  </div>
+                </div>
+                <div class="col-sm-4" style="border:1px  solid #ddd;height: 50px;">
+                  <div class="form-group">
+                    <label for="CommuteLength">Commute Length  ({{user_info?.commute_max_mins}} - mins)</label>
+
+
+
+                    <p-slider [(ngModel)]="user_info.commute_max_mins" [max]='60' name="commute_max_mins" id="commute_max_mins"></p-slider>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="buttons-submit text-center">
+              <button type="button" class="btn btn-outline-secondary">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="findDifference()">Save Changes</button>
+              <br />
+              <button type="button" class="btn btn-link">Log out</button>
+            </div>
+          </div>
+
+        </div>
+        <!-- forn section end -->
+
+      </div>
+      <!--container div end -->
+    </div>
+    <!--contend div end -->
+
+  </div>
+  <!-- overall page control end -->
+
+  <footer>
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7">
+            <div class="design">
+              <a href="#">Advertisers </a> |
+              <a href="#">Contact US </a> |
+              <a href="#">Terms Of Use </a> |
+              <a href="#">Privacy Policy </a>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="copyright text-right">
+              &copy; 2018, Zapartments, All rights reserved
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- jQuery -->
+  <!-- 
+  <script>
+    $(function () {
+      $("#datepicker2").datepicker().datepicker("setDate", new Date());
+    });
+  </script>
+
+  <script>
+    $(function () {
+      $("#slider-range").slider({
+        range: true,
+        min: 1500,
+        max: 10000,
+        values: [2000, 3000],
+        slide: function (event, ui) {
+          $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        }
+      });
+      $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        " - $" + $("#slider-range").slider("values", 1));
+    });
+  </script>
+
+
+  <script type="text/javascript">
+    $('.multioption').multiselect();
+  </script>
+
+  <script>
+    $('.btn_click').click(function () {
+      var myItem = $(this);
+      myItem.toggleClass("active animate-scale");
+      setTimeout(function () {
+        myItem.removeClass("animate-scale");
+      }, 100);
+    });
+
+    $('.change_city').click(function () {
+      $('.location-select-map').slideUp(100);
+      $('.location-type-form').slideDown(200);
+    });
+
+    $('.return-tab').click(function () {
+      $('.location-select-map').slideDown(200);
+      $('.location-type-form').slideUp(100)
+    });
+  </script>
+
+
+  <style>
+    #ui-datepicker-div {
+      background: #f5f5f5;
+    }
+  </style> -->
+
+</div>
+
+
+</html>

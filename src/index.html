@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>Olivelights</title>
+  <link rel="stylesheet" href="assets\css\vendor.min48e0.css?v=201603120801">
+  <link rel="stylesheet" href="assets\css\font-awesome.min48e0.css?v=201603120801">
+  <link rel="stylesheet" href="assets\css/theme-default.min48e0.css?v=201603120801">
+  <!-- <link rel="stylesheet" href="assets\css\custom.css"> -->
+  <link rel="stylesheet" href="assets\css\theme.css" />
+  <link rel="stylesheet" href="assets\css\primeng.min.css" />
+  <link rel="stylesheet" href="assets\css\commonStyle.css" />
+  <!-- <link  rel="stylesheet" href="assets\css\apart_style.css"> -->
+
+  <!-- <link rel="stylesheet" href="assets/css/apart-detail/vendor.css">
+  <link rel="stylesheet" href="assets/css/apart-detail/style.css">
+  <link rel="stylesheet" href="assets/css/apart-detail/font-awesome.css">
+  <link rel="stylesheet" href="assets/css/apart-detail/fonticon.css">
+  <link rel="stylesheet" href="assets/css/apart-detail/theme-default.css"> -->
+  <!-- <link rel="stylesheet" href="assets/css/apart-detail/custom.css"> -->
+
+
+
+  <!-- <link rel="stylesheet" href="assets/css/apartmentCss/bootstrap4.min.css"> -->
+  <link href="assets/css/apartmentCss/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" media="all" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> -->
+  <link rel="stylesheet" href="assets/css/apartmentCss/style-signup.css">
+  <link rel="stylesheet" href="assets/css/apartmentCss/custom-style.css">
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+</head>
+
+<body>
+ 
+  <app-root></app-root>
+  <!-- <script type="text/javascript" src="assets\js\map.js"></script> -->
+  <script src="assets\js\jquery.min.js"></script>
+  <script src="assets\js\bootstrap.min.js"></script>
+  <script src="assets\js\apartmentJs\spin.js"></script>
+  <script src="assets\js\apartmentJs\jquery.spin.js"></script>
+  <script src="assets\js\keditor.js"></script>
+
+
+  <script type="text/javascript" src="assets/js/vendor.js"></script>
+  <script type="text/javascript" src="assets/js/demodata.js"></script>
+  <!-- <script type="text/javascript" src="assets/js/app.js"></script> -->
+  <!-- <script type="text/javascript" src="assets/js/demo.js"></script> -->
+  <script>
+
+
+
+    $(window).scroll(function () {
+      var sticky = $('.right'),
+        scroll = $(window).scrollTop();
+
+      if (scroll >= 100) sticky.addClass('fixed-detail');
+      else sticky.removeClass('fixed-detail');
+    });
+
+    $(window).scroll(function () {
+      var sticky = $('.detailpage-right'),
+        scroll = $(window).scrollTop();
+
+      if (scroll >= 100) sticky.addClass('fixed-right');
+      else sticky.removeClass('fixed-right');
+    });
+    function spin() {
+      $('body').spin("modal", "#FFFFFF", "rgba(51, 51, 51, 0.1)");
+    }
+  </script>
+
+
+</body>
+
+</html>
